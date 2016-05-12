@@ -1,0 +1,11 @@
+specific represents of from
+	from = "trade_1"  	: 返回到原料往来
+	from = "trade_2"	: 返回到销售往来
+	from = "client_1"	： 返回到原料客户
+	from = "client_2"	： 返回到销售客户
+	from = "client_3"	:  个人往来页面的增加按钮
+	
+	
+tradeFlag
+	一般情况 ：每次都从from里截取，除了菜单那里。
+	

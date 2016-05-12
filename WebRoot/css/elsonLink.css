@@ -1,0 +1,264 @@
+.menulink:link {
+	font-family: "微软雅黑";
+	font-size: 14px;
+	font-weight: bold;
+	text-align: center;
+	background-image: url(../img/menuLeft.png);
+	position:relative;
+	height: 40px;
+	left: 0px;
+	top: 0px;
+	line-height: 40px;
+	width: 186px;
+	float: left;
+	color: #333;
+}
+.menulink:visited {
+	font-family: "微软雅黑";
+	font-size: 14px;
+	font-weight: bold;
+	text-align: center;
+	background-image: url(../img/menuLeft.png);
+	position:relative;
+	height: 40px;
+	left: 0px;
+	top: 0px;
+	line-height: 40px;
+	width: 186px;
+	float: left;
+	color: #333;
+}
+.menulink:hover {
+	font-family: "微软雅黑";
+	font-size: 14px;
+	font-weight: bold;
+	text-align: center;
+	position:relative;
+	height: 40px;
+	left: 0px;
+	top: 0px;
+	line-height: 40px;
+	width: 186px;
+	float: left;
+	background-image: url(../img/menuLeftC.png);
+	color: #039;
+}
+.menulink:active {
+	font-family: "微软雅黑";
+	font-size: 15px;
+	font-weight: bold;
+	text-align: center;
+	position:relative;
+	height: 40px;
+	left: 0px;
+	top: 0px;
+	line-height: 40px;
+	width: 186px;
+	float: left;
+	background-image: url(../img/menuLeftC.png);
+	color: #039;
+}
+
+.toplink:link {
+	font-family: "微软雅黑";
+	font-size: 15px;
+	font-weight: bold;
+	text-align: center;
+	background-image: url(../img/menutop.png);
+	position:relative;
+	height: 60px;
+	left: 0px;
+	top: 0px;
+	line-height: 60px;
+	width: 126px;
+	float: left;
+	color: #333;
+}
+.toplink:visited {
+	font-family: "微软雅黑";
+	font-size: 15px;
+	font-weight: bold;
+	text-align: center;
+	background-image: url(../img/menutop.png);
+	position:relative;
+	height: 60px;
+	left: 0px;
+	top: 0px;
+	line-height: 60px;
+	width: 126px;
+	float: left;
+	color: #333;
+}
+.toplink:hover {
+	font-family: "微软雅黑";
+	font-size: 15px;
+	font-weight: bold;
+	text-align: center;
+	background-image: url(../img/menutopC.png);
+	position:relative;
+	height: 60px;
+	left: 0px;
+	top: 0px;
+	line-height: 60px;
+	width: 126px;
+	float: left;
+	color: #900;	
+}
+.toplink:active {
+	font-family: "微软雅黑";
+	font-size: 15px;
+	font-weight: bold;
+	text-align: center;
+	background-image: url(../img/menutopC.png);
+	position:relative;
+	height: 60px;
+	left: 0px;
+	top: 0px;
+	line-height: 60px;
+	width: 126px;
+	float: left;
+	color: #900;	
+}
+
+.minR:link {
+	font-family: "微软雅黑";
+	font-size: 12px;
+	font-weight: bold;
+	text-align: center;
+	background-image: url(../img/min.png);
+	position:relative;
+	height: 30px;
+	left: 0px;
+	top: 0px;
+	line-height: 30px;
+	width: 90px;
+	float: right;
+	color: #FFF;
+}
+.minR:visited {
+	font-family: "微软雅黑";
+	font-size: 12px;
+	font-weight: bold;
+	text-align: center;
+	background-image: url(../img/min.png);
+	position:relative;
+	height: 30px;
+	left: 0px;
+	top: 0px;
+	line-height: 30px;
+	width: 90px;
+	float: right;
+	color: #333;
+}
+.minR:hover {
+	font-family: "微软雅黑";
+	font-size: 12px;
+	font-weight: bold;
+	text-align: center;
+	background-image: url(../img/minC.png);
+	position:relative;
+	height: 30px;
+	left: 0px;
+	top: 0px;
+	line-height: 30px;
+	width: 90px;
+	float: right;
+	color: #666;
+}
+.minR:active {
+	font-family: "微软雅黑";
+	font-size: 12px;
+	font-weight: bold;
+	text-align: center;
+	background-image: url(../img/minC.png);
+	position:relative;
+	height: 30px;
+	left: 0px;
+	top: 0px;
+	line-height: 30px;
+	width: 90px;
+	float: right;
+	color: #666;
+}
+#maintop {
+	background-image: url(../img/littR.png);
+	float: left;
+	height: 30px;
+	width: 30px;
+}
+.btn2 {
+	font-size:12px;
+	height:23;
+	background-color:#ece9d8;
+	border-width:1;
+	font-family: "微软雅黑";
+	font-weight: normal;
+	color: #333;
+	float: right;
+	margin-top: 3px;
+	margin-right: 10px;
+	padding-top: 2;
+	padding-right: 4;
+	padding-bottom: 0;
+	padding-left: 4;
+}
+.btn1 {
+	font-size:12px;
+	height:23;
+	background-color:#ece9d8;
+	border-width:1;
+	font-family: "微软雅黑";
+	font-weight: normal;
+	color: #333;
+	padding-top: 2;
+	padding-right: 4;
+	padding-bottom: 0;
+	padding-left: 4;
+}.topMTopText:link {
+	font-family: "宋体";
+	font-size: 13px;
+	font-weight: bold;
+	color: #333;
+	margin-right: 6px;
+	margin-left: 6px;
+}
+.topMTopText：visited {
+	font-family: "宋体";
+	font-size: 13px;
+	font-weight: bold;
+	color: #333;
+	margin-right: 6px;
+	margin-left: 6px;
+}
+.topMTopText:hover {
+	color: #39F;
+}
+.topMTopText:active {
+	color: #39F;
+}
+.tableD01:link {
+	float: right;
+	height: 33px;
+	width: auto;
+	line-height: 33px;
+	color: #039;
+	margin-right: 10px;
+	font-family: "微软雅黑";
+	font-size: 12px;
+}
+.tableD01:visite {
+	float: right;
+	height: 33px;
+	width: auto;
+	line-height: 33px;
+	color: #039;
+	margin-right: 10px;
+	font-family: "微软雅黑";
+	font-size: 12px;
+}
+.tableD01:hover {
+	color: #F00;
+}
+.tableD01:active {
+	color: #F00;
+}

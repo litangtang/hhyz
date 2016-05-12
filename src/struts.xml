@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<constant name="struts.devMode" value="true" />
+	<!-- 允许动态方法调用 -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+	<constant name="struts.i18n.encoding" value="utf-8"></constant>
+	<constant name="struts.objectFactory" value="spring" />
+	<!-- 调节样式，否则select会换行 -->
+	<constant name="struts.ui.theme" value="simple" />
+	
+	<package name="struts-shop" extends="struts-default">
+	    <interceptors>
+	    	<interceptor name="authority" class="com.hhyzoa.interceptor.AuthorityInterceptor"/>
+	    	
+	    	<interceptor-stack name="myStack">
+	        	<interceptor-ref name="authority"></interceptor-ref>
+	       		<interceptor-ref name="defaultStack"/>
+	      	</interceptor-stack>
+	    </interceptors>
+	    
+	    <!-- 这句是设置所有Action自动调用的拦截器堆栈  -->
+	    <default-interceptor-ref name="defaultStack"/>
+  </package>
+	<!-- 首页 -->
+
+	<!-- 客户 -->
+	<package name="client" extends="struts-shop" namespace="/client">
+		<action name="forAdd" class="com.hhyzoa.action.ClientAction" method="forAdd">
+			<result>/appjsps/client/client_forAdd.jsp</result>
+		</action>
+		
+		<action name="add" class="com.hhyzoa.action.ClientAction" method="add">
+			<interceptor-ref name="token" />
+			<interceptor-ref name="defaultStack" /> 
+			<result type="redirect">/client/listAll.action?searchType=${fromWhere}</result>
+			<result name="invalid.token" type="redirectAction">/listAll.action?searchType=${fromWhere}</result>
+			<result name="input">/appjsps/trade/trade_errors.jsp</result>
+		</action>
+		
+		<action name="forUpdate" class="com.hhyzoa.action.ClientAction" method="forUpdate">
+			<result>/appjsps/client/client_forUpdate.jsp</result>
+		</action>
+		
+		<action name="update" class="com.hhyzoa.action.ClientAction" method="update">
+			<result type="redirect">/client/listAll.action?searchType=${fromWhere}</result>
+			<result name="input">/appjsps/trade/trade_errors.jsp</result>
+		</action>
+		
+		
+		<action name="listAll" class="com.hhyzoa.action.ClientAction" method="listAll">
+			<result>/appjsps/client/client_listAll.jsp</result>
+		</action>
+		
+		<action name="delete" class="com.hhyzoa.action.ClientAction" method="delete">
+			<result type="redirect">/client/listAll.action</result>
+		</action>
+	</package>
+
+	<!-- 交易 -->
+	<package name="trade" extends="struts-shop" namespace="/trade">
+
+		<action name="forAdd"
+			class="com.hhyzoa.action.TradeAction" method="forAdd">
+			<result>/appjsps/trade/trade_forAdd.jsp</result>
+		</action>
+
+		<action name="tradeAdd" class="com.hhyzoa.action.TradeAction" method="tradeAdd">
+			<interceptor-ref name="token" />
+			<interceptor-ref name="defaultStack" /> 
+			<result type="redirect">/trade/listAllOfSB.action?from=${fromWhere}&amp;clientId=${clientId}</result>
+		</action>
+		
+		<action name="forUpdate"
+			class="com.hhyzoa.action.TradeAction" method="forUpdate">
+			<result>/appjsps/trade/trade_forUpdate.jsp</result>
+		</action>
+		
+		<action name="forUpdateOfSB"
+			class="com.hhyzoa.action.TradeAction" method="forUpdateOfSB">
+			<result>/appjsps/trade/trade_forUpdateOfSB.jsp</result>
+		</action>
+		
+		
+		<action name="update" class="com.hhyzoa.action.TradeAction" method="update">
+			<result type="redirect">/trade/listAllOfSB.action?clientId=${clientId}</result>
+			<result name="input">/appjsps/trade/trade_errors.jsp</result>
+		</action>
+		
+		<action name="listAll"
+			class="com.hhyzoa.action.TradeAction" method="listAll">
+			<result>/appjsps/trade/trade_listAll.jsp</result>
+			<result name="input">/appjsps/trade/trade_errors.jsp</result>
+		</action>
+		
+		<action name="listAllOfSB"
+			class="com.hhyzoa.action.TradeAction" method="listAllOfSB">
+			<result>/appjsps/trade/trade_listAllOfSB.jsp</result>
+		</action>
+		
+		<action name="delete" class="com.hhyzoa.action.TradeAction" method="delete">
+			<result type="redirect">/trade/listAll.action?from=${fromWhere}</result>
+		</action>
+		
+		<action name="deleteFromSB" class="com.hhyzoa.action.TradeAction" method="deleteFromSB">
+			<result type="redirect">/trade/listAllOfSB.action?from=${fromWhere}&amp;clientId=${clientId}</result>
+		</action>
+
+	</package>
+	
+	<!-- 成本核算/出油率  -->
+	<package name="rate" extends="struts-shop" namespace="/rate">
+		
+		<action name="listAll"
+			class="com.hhyzoa.action.RateOfProduceAction" method="listAll">
+			<result>/appjsps/cost/rate/rateOfProduce_listAll.jsp</result>
+		</action>
+		
+		<action name="forAdd"
+			class="com.hhyzoa.action.RateOfProduceAction" method="forAdd">
+			<result>/appjsps/cost/rate/rateOfProduce_forAdd.jsp</result>
+		</action>
+		
+		<action name="add"
+			class="com.hhyzoa.action.RateOfProduceAction" method="add">
+			<interceptor-ref name="token" />
+			<interceptor-ref name="defaultStack" /> 
+			<result type="redirectAction">/rate/listAll.action</result>
+		</action>
+		
+		<action name="forUpdate"
+			class="com.hhyzoa.action.RateOfProduceAction" method="forUpdate">
+			<result>/appjsps/cost/rate/rateOfProduce_forUpdate.jsp</result>
+		</action>
+		
+		<action name="update"
+			class="com.hhyzoa.action.RateOfProduceAction" method="update">
+			<result type="redirectAction">/rate/listAll.action</result>
+		</action>
+		
+		<action name="delete"
+			class="com.hhyzoa.action.RateOfProduceAction" method="delete">
+			<!-- redirectAction不能传递参数，redirect可以传递参数 -->
+			<result type="redirectAction">/rate/listAll.action</result>
+		</action>
+		
+	</package>
+	
+	<!-- 成本核算/成本核算  -->
+	<package name="cost" extends="struts-shop" namespace="/cost">
+		
+		<action name="listAll"
+			class="com.hhyzoa.action.CostAccountingAction" method="listAll">
+			<result>/appjsps/cost/cost/costAccounting_listAll.jsp</result>
+		</action>
+		
+		<action name="forAdd"
+			class="com.hhyzoa.action.CostAccountingAction" method="forAdd">
+			<result>/appjsps/cost/cost/costAccounting_forAdd.jsp</result>
+		</action>
+		
+		<action name="forAdd2"
+			class="com.hhyzoa.action.CostAccountingAction" method="forAdd2">
+			<result>/appjsps/cost/cost/costAccounting_forAdd2.jsp</result>
+		</action>
+		
+		<action name="add"
+			class="com.hhyzoa.action.CostAccountingAction" method="add">
+			<interceptor-ref name="token" />
+			<interceptor-ref name="defaultStack" /> 
+			<result type="redirectAction">/cost/listAll.action</result>
+		</action>
+		
+		<action name="add2"
+			class="com.hhyzoa.action.CostAccountingAction" method="add2">
+			<interceptor-ref name="token" />
+			<interceptor-ref name="defaultStack" /> 
+			<result type="redirectAction">/cost/listAll.action</result>
+		</action>
+		
+		<action name="forUpdate"
+			class="com.hhyzoa.action.CostAccountingAction" method="forUpdate">
+			<result>/appjsps/cost/cost/costAccounting_forUpdate.jsp</result>
+		</action>
+		
+		<action name="update"
+			class="com.hhyzoa.action.CostAccountingAction" method="update">
+			<result type="redirectAction">/cost/listAll.action</result>
+		</action>
+		
+		<action name="delete"
+			class="com.hhyzoa.action.CostAccountingAction" method="delete">
+			<result type="redirectAction">/cost/listAll.action</result>
+		</action>
+	</package>
+	
+	<!-- 成本核算/进销存  -->
+	<package name="buySellSave" extends="struts-shop" namespace="/buySellSave">
+		
+		<action name="listAll"
+			class="com.hhyzoa.action.BuySellSaveAction" method="listAll">
+			<result>/appjsps/cost/buySellSave/buySellSave_listAll.jsp</result>
+		</action>
+		
+		<action name="forAdd"
+			class="com.hhyzoa.action.BuySellSaveAction" method="forAdd">
+			<result>/appjsps/cost/buySellSave/buySellSave_forAdd.jsp</result>
+		</action>
+		
+		<action name="add"
+			class="com.hhyzoa.action.BuySellSaveAction" method="add">
+			<interceptor-ref name="token" />
+			<interceptor-ref name="defaultStack" /> 
+			<result type="redirectAction">/buySellSave/listAll.action</result>
+		</action>
+		
+		<action name="forUpdate"
+			class="com.hhyzoa.action.BuySellSaveAction" method="forUpdate">
+			<result>/appjsps/cost/cost/costAccounting_forUpdate.jsp</result>
+		</action>
+		
+		<action name="update"
+			class="com.hhyzoa.action.BuySellSaveAction" method="update">
+			<result type="redirectAction">/cost/listAll.action</result>
+		</action>
+		
+		<action name="delete"
+			class="com.hhyzoa.action.BuySellSaveAction" method="delete">
+			<result type="redirectAction">/cost/listAll.action</result>
+		</action>
+	</package>
+	
+	<!-- 销售记录 -->
+	<package name="productSell" extends="struts-shop" namespace="/productSell">
+		<action name="listAll"
+			class="com.hhyzoa.action.ProductSellAction" method="listAll">
+			<result>/appjsps/index/productSell_listAll.jsp</result>
+		</action>
+		
+		<action name="forAdd"
+			class="com.hhyzoa.action.ProductSellAction" method="forAdd">
+			<result>/appjsps/index/productSell_forAdd.jsp</result>
+		</action>
+		
+		<action name="add"
+			class="com.hhyzoa.action.ProductSellAction" method="add">
+			<interceptor-ref name="token" />
+			<interceptor-ref name="defaultStack" /> 
+			<result type="redirect">/productSell/listAll.action?busiType=${paramBusiType}</result>
+		</action>
+		
+		<action name="delete"
+			class="com.hhyzoa.action.ProductSellAction" method="delete">
+			<result type="redirect">/productSell/listAll.action?busiType=${paramBusiType}</result>
+		</action>
+		
+		<action name="forUpdate"
+			class="com.hhyzoa.action.ProductSellAction" method="forUpdate">
+			<result>/appjsps/index/productSell_forUpdate.jsp</result>
+		</action>
+		
+		<action name="update"
+			class="com.hhyzoa.action.ProductSellAction" method="update">
+			<result type="redirect">/productSell/listAll.action?busiType=${paramBusiType}</result>
+		</action>
+		
+		<action name="calAccu"
+			class="com.hhyzoa.action.ProductSellAction" method="calAccu">
+			<result type="redirect">/productSell/listAll.action?busiType=${paramBusiType}</result>
+		</action>
+		
+	</package>
+	
+	
+	<!-- 发货安排 -->
+	<package name="productArrange" extends="struts-shop" namespace="/productArrange">
+		<action name="listAll"
+			class="com.hhyzoa.action.ProductArrangeAction" method="listAll">
+			<result>/appjsps/index/productArrange_listAll.jsp</result>
+		</action>
+		
+		<action name="forAdd"
+			class="com.hhyzoa.action.ProductArrangeAction" method="forAdd">
+			<result>/appjsps/index/productArrange_forAdd.jsp</result>
+		</action>
+		
+		<action name="add"
+			class="com.hhyzoa.action.ProductArrangeAction" method="add">
+			<interceptor-ref name="token" />
+			<interceptor-ref name="defaultStack" /> 
+			<result type="redirect">/productArrange/listAll.action</result>
+		</action>
+		
+		<action name="delete"
+			class="com.hhyzoa.action.ProductArrangeAction" method="delete">
+			<result type="redirect">/productArrange/listAll.action</result>
+		</action>
+		
+		<action name="forUpdate"
+			class="com.hhyzoa.action.ProductArrangeAction" method="forUpdate">
+			<result>/appjsps/index/productArrange_forUpdate.jsp</result>
+		</action>
+		
+		<action name="update"
+			class="com.hhyzoa.action.ProductArrangeAction" method="update">
+			<result type="redirect">/productArrange/listAll.action</result>
+		</action>
+	</package>
+	
+	
+	<!-- 开票记录 -->
+	<package name="invoice" extends="struts-shop" namespace="/invoice">
+		<action name="listAll"
+			class="com.hhyzoa.action.InvoiceAction" method="listAll">
+			<result>/appjsps/index/invoice_listAll.jsp</result>
+		</action>
+		
+		<action name="forAdd"
+			class="com.hhyzoa.action.InvoiceAction" method="forAdd">
+			<result>/appjsps/index/invoice_forAdd.jsp</result>
+		</action>
+		
+		<action name="add"
+			class="com.hhyzoa.action.InvoiceAction" method="add">
+			<interceptor-ref name="token" />
+			<interceptor-ref name="defaultStack" /> 
+			<result type="redirect">/invoice/listAll.action</result>
+		</action>
+		
+		<action name="delete"
+			class="com.hhyzoa.action.InvoiceAction" method="delete">
+			<result type="redirect">/invoice/listAll.action</result>
+		</action>
+		
+		<action name="forUpdate"
+			class="com.hhyzoa.action.InvoiceAction" method="forUpdate">
+			<result>/appjsps/index/invoice_forUpdate.jsp</result>
+		</action>
+		
+		<action name="update"
+			class="com.hhyzoa.action.InvoiceAction" method="update">
+			<result type="redirect">/invoice/listAll.action</result>
+		</action>
+	</package>
+
+	<!--  
+	<package name="actions" extends="struts-default"
+		namespace="/actions">
+		<action name="*_*" class="com.hhyzoa.action.{1}Action"
+			method="{2}">
+			<result>/appjsps/{1}/{1}_{2}_success.jsp</result>
+		</action>
+	</package>
+	-->
+
+</struts>

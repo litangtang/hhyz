@@ -1,0 +1,79 @@
+CREATE DATABASE hhyz;
+
+CREATE TABLE `trade` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `client_id` int(11) DEFAULT NULL COMMENT '客户id',
+  `date` date DEFAULT NULL,
+  `abst` varchar(50) DEFAULT NULL COMMENT '摘要',
+  `packages` int(11) DEFAULT NULL COMMENT '件数',
+  `amount` float DEFAULT NULL COMMENT '数量',
+  `price` float DEFAULT NULL COMMENT '单价',
+  `carriage` float DEFAULT NULL COMMENT '送货金额',
+  `payment` float DEFAULT NULL COMMENT '付款金额',
+  `is_loan` int(11) DEFAULT NULL COMMENT '1为借2为贷',
+  `balance` float DEFAULT NULL COMMENT '余额',
+  `verify` varchar(50) DEFAULT NULL COMMENT '核对情况',
+  `remark` varchar(100) DEFAULT NULL COMMENT '备注',
+  `flag` int(2) DEFAULT NULL COMMENT '1为原料往来2为销售往来',
+  `level` int(20) DEFAULT NULL COMMENT '每增加一笔来往，加1，针对单个客户，从1开始',
+  PRIMARY KEY (`id`)
+) ;
+
+CREATE TABLE `client` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(10) DEFAULT NULL,
+  `company_name` varchar(100) DEFAULT NULL,
+  `type` int(11) DEFAULT NULL,
+  `company_addr` varchar(200) DEFAULT NULL,
+  `office_phone` varchar(20) DEFAULT NULL,
+  `mobile_phone` varchar(20) DEFAULT NULL,
+  `fax` varchar(20) DEFAULT NULL,
+  `remark` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+#蓖麻油出品率核算表
+CREATE TABLE `rate_of_produce` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `date` date DEFAULT NULL COMMENT '日期',
+  `num_of_cans` double DEFAULT NULL COMMENT '油桶数',
+  `num_of_packages` double DEFAULT NULL COMMENT '饼袋数',
+  `rate_of_oil` double DEFAULT NULL COMMENT '出油率',
+  `rate_of_cake` double DEFAULT NULL COMMENT '出饼率',
+  `num_of_machines` int(11) DEFAULT NULL COMMENT '1单机生产，2双机生产',
+  `flag` int(11) DEFAULT NULL COMMENT '1日平均数，2月平均数',
+  `cans_multiply` double DEFAULT NULL COMMENT '油桶重量',
+  `packages_multiply` double DEFAULT NULL COMMENT '饼袋重量',
+  `rate_multiply` double DEFAULT NULL COMMENT '出品率基数',
+  `capacity` double DEFAULT NULL COMMENT '当日油的容积',
+  `oil_rate` double DEFAULT NULL COMMENT '油的比重(0.93常量)',
+  PRIMARY KEY (`id`)
+)
+
+#生产成本核算表
+CREATE TABLE `cost_accounting` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `material_origin` varchar(20) DEFAULT NULL COMMENT '原料产地',
+  `rate_of_Oil` double DEFAULT NULL COMMENT '出油率',
+  `material_cost` int(10) DEFAULT NULL COMMENT '原料成本',
+  `fcpz` int(10) DEFAULT NULL COMMENT '副产品值',
+  `ejyz` int(10) DEFAULT NULL COMMENT '二级油值',
+  `ejy_jgf` int(10) DEFAULT NULL COMMENT '二级油加工费',
+  `ejjs_cost` int(10) DEFAULT NULL COMMENT '二级净水成本',
+  `yjy_jgf` int(10) DEFAULT NULL COMMENT '一级油加工',
+  `jlsh` int(10) DEFAULT NULL COMMENT '精炼损耗',
+  `yjjs_cost` int(10) DEFAULT NULL COMMENT '一级净水成本',
+  `tax` int(10) DEFAULT NULL COMMENT '国地两税',
+  `ttbz` int(10) DEFAULT NULL COMMENT '铁桶包装',
+  `tqyf` int(10) DEFAULT NULL COMMENT '铁汽运费',
+  `sell_cost` int(10) DEFAULT NULL COMMENT '销售成本',
+  `sell_profit` int(11) DEFAULT NULL COMMENT '销售利润',
+  `sell_price` int(11) DEFAULT NULL COMMENT '销售价格',
+  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  `material_price` double DEFAULT NULL COMMENT '原料价格',
+  `material_unit_price` double DEFAULT NULL COMMENT '原料单价',
+  `client_id` int(11) DEFAULT NULL COMMENT '供应单位id，销售客户',
+  `yjyshl` double DEFAULT NULL COMMENT '一级油损耗率',
+  `date` date DEFAULT NULL COMMENT '日期',
+  PRIMARY KEY (`id`)
+);

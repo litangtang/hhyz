@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="hhyz_oa"
+  id="myeclipse.1282743707830"
+  context-root="/hhyz_oa"
+  j2ee-spec="5.0"
+  archive="hhyz_oa.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

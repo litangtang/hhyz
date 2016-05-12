@@ -1,0 +1,9 @@
+#Sun Jul 21 22:27:32 CST 2013
+eclipse.preferences.version=1
+encoding//WebRoot/appjsps/cost/line_frame.jsp=UTF-8
+encoding//WebRoot/appjsps/login/login.jsp=UTF-8
+encoding//src/com/hhyzoa/dao/BaseDao.java=gbk
+encoding//src/com/hhyzoa/dao/ClientDao.java=UTF-8
+encoding//src/com/hhyzoa/dao/TradeDao.java=gbk
+encoding//src/com/hhyzoa/model/Client.java=gbk
+encoding//src/log4j.properties=UTF-8

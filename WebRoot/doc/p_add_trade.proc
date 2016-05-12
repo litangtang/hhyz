@@ -1,0 +1,33 @@
+DELIMITER $$
+
+USE `hhyz`$$
+
+DROP PROCEDURE IF EXISTS `p_update_balance`$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `p_add_trade`(
+					IN in_client_id INT,
+					IN trade FLOAT,
+					IN in_level INT)
+    READS SQL DATA
+BEGIN
+		DECLARE trade_count INT DEFAULT 0; 
+		DECLARE	trade_id INT; 			
+		DECLARE match_trade CURSOR FOR SELECT trade.id FROM trade WHERE LEVEL > in_level AND client_id = in_client_id; 
+		
+		SELECT COUNT(*)	INTO trade_count FROM trade WHERE LEVEL > in_level AND client_id = in_client_id ;
+		OPEN match_trade;
+		update_balance:LOOP
+			FETCH match_trade INTO trade_id;
+			IF trade_count > 0 THEN
+				UPDATE trade SET balance = balance + in_balance_change WHERE id = trade_id;		
+			END IF;
+			
+			SET trade_count = trade_count - 1;
+			IF trade_count=0 THEN
+				LEAVE update_balance;
+			END IF;
+		END LOOP update_balance;
+		CLOSE match_trade;
+    END$$
+
+DELIMITER ;

@@ -1,0 +1,8 @@
+Action :
+		add/delete/find/update
+
+Service
+		add/remove/query/modify
+
+Dao
+		save/delete/find/update

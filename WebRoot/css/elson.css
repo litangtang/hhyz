@@ -1,0 +1,146 @@
+.bodym {
+	background-image: url(../img/bodym.jpg);
+	background-repeat: repeat-x;
+}
+
+body,td,th {
+	font-family: 微软雅黑;
+	font-size: 12px;
+	color: #333;
+}
+a:link {
+	text-decoration: none;
+}
+a:visited {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: none;
+}
+a:active {
+	text-decoration: none;
+}
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	background-color: #EAE8E9;
+}
+.menuAction {
+	font-family: "微软雅黑";
+	font-size: 13px;
+	font-weight: bold;
+	color: #069;
+	line-height: 30px;
+	margin-left: 30px;
+}
+.min {
+	margin-left: 20px;
+	float: left;
+	line-height: 30px;
+	color: #333;
+}
+.maintoptext {
+	font-family: "微软雅黑";
+	font-size: 13px;
+	line-height: 30px;
+	font-weight: bold;
+	color: #666;
+	float: left;
+	margin-left: 5px;
+}
+.ymaintext {
+	font-size: 12px;
+	font-weight: normal;
+	color: #036;
+}
+
+
+
+#menutop {
+	background-image: url(../img/littW.png);
+	float: left;
+	height: 30px;
+	width: 32px;
+	margin-left: 8px;
+}
+.mainAction {
+	font-family: "微软雅黑";
+	font-size: 12px;
+	line-height: 30px;
+	font-weight: normal;
+	color: #666;
+	float: left;
+	margin-left: 5px;
+}
+.maintop {
+	border-top-width: 1px;
+	border-bottom-width: 1px;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-top-color: #333;
+	border-bottom-color: #333;
+	background-color: #DAE7EF;
+}
+.mainmin {
+	float: left;
+	height: 28px;
+	width: 28px;
+	margin-top: 2px;
+	margin-left: 3px;
+}
+.maintable {
+	border: 1px solid #CCC;
+	height: auto;
+	width: 602px;
+	padding: 1px;
+	margin-bottom: 10px;
+}.zmaintext {
+	background-color: #E8E8E8;
+	padding: 1px;
+	border: 1px solid #FFF;
+}
+.mainTopMenuRight {
+	float: right;
+	height: 30px;
+	width: 550px;
+	text-align: right;
+	padding-right: 10px;
+	font-family: "微软雅黑";
+	font-size: 16px;
+	font-weight: bolder;
+	color: #666;
+	line-height: 30px;
+}
+.mainTopMenuLeftLeft {
+	float: left;
+	height: 25px;
+	width: 150px;
+	font-family: "微软雅黑";
+	font-size: 14px;
+	line-height: 30px;
+	font-weight: bold;
+	color: #036;
+}
+.mainTopMenuLeft {
+	font-family: "宋体";
+	font-size: 14px;
+	font-weight: bold;
+	color: #657FA0;
+	margin-left: 10px;
+}
+#mainTopMenu {
+	background-color: #DAE7EF;
+	vertical-align: middle;
+	height: 30px;
+	margin-top: 0px;
+	margin-right: 0px;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #999;
+	border-bottom-color: #999;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	line-height: 30px;
+}
