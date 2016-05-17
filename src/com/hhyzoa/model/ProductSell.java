@@ -21,12 +21,9 @@ public class ProductSell {
 	private String clientName;		//客户名称
 	private Integer busiType;		//1-蓖麻饼，2-精炼一级油，3-国标二级油
 	private Integer packages;		//件数
-	private Integer packagesAccu;	//件数累计
 	private Float count;			//数量
-	private Float countAccu;		//数量累计
-	private Float price;			//单价
 	private Float amount;			//金额
-	private Float amountAccu;		//金额累计
+	private Float price;			//单价
 	private Integer day;			//月
 	private Integer month;			//日
 	private Integer year;			//年
@@ -37,6 +34,9 @@ public class ProductSell {
 	private Float countChange;		//数量增量,不存库
 	private Float amountChange;		//金额增量,不存库
 	
+	private Integer packagesAccu;	//件数累计
+	private Float countAccu;		//数量累计
+	private Float amountAccu;		//金额累计
 	
 	@Id
 	@GeneratedValue
@@ -182,5 +182,4 @@ public class ProductSell {
 	public void setAmountChange(Float amountChange) {
 		this.amountChange = amountChange;
 	}
-	
 }

@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,15 +22,17 @@ import com.hhyzoa.util.FormatUtil;
 @Component("productSellService")
 public class ProductSellServiceImpl implements ProductSellService {
 	
+	private Logger log = LoggerFactory.getLogger(ProductSellServiceImpl.class);
+	
 	private ClientDao clientDao;
 	private ProductSellDao productSellDao;
 
 	/**
-	 * 增加的时候计算3个累计
-	 * 件数累计、数量累计、金额累计
-	 * 如果没有日期比待增加的小的话,则是最早的日期
-	 * 同时,日期比待增加日期大的累计需要加上待增加对象的件数、数量、金额
-	 * 新增的某一天的记录为该天的最后一条记录
+	 * 增加的时候计算3个累计,件数累计、数量累计、金额累计
+	 * 1. 如果没有日期比待增加的小的话,则是最早的日期
+	 * 2. 日期比待增加日期大的累计需要加上待增加对象的件数、数量、金额即增量
+	 * 3. 新增的某一天的记录为该天的最后一条记录
+	 * 4. 增加之前先按月重置所有记录的3个累计值，防止删除中间某一条记录后，导致新增加的累计计算错误 - 暂时不需要，保证删除完重置即可
 	 */
 	public void add(ProductSell ps) throws Exception{
 		Date sellDate = ps.getSellDate();
@@ -39,7 +43,12 @@ public class ProductSellServiceImpl implements ProductSellService {
 		ps.setMonth(month);
 		ps.setDay(day);
 		
-		//计算累计
+		//2016-05-17 增加 暂时不需要，保证删除完重置即可
+//		log.info(String.format("重置[%s]年[%s]月busiType为[%s]的所有记录累计开始......", ps.getYear(), ps.getMonth(), ps.getBusiType()));
+//		calAccu(ps.getYear(), ps.getMonth(),ps.getBusiType());
+//		log.info("重置所有记录累计结束......");
+		
+		//1. 计算累计
 		List<ProductSell> psList = productSellDao.findLeDay(year, month, day, ps.getBusiType());
 		if(psList.size() > 0) {
 			//psList的最后一项的累计 + 当前增加的
@@ -54,7 +63,7 @@ public class ProductSellServiceImpl implements ProductSellService {
 		}
 		productSellDao.save(ps);
 		
-		//更新日期比待增加日期大的累计
+		//2. 更新日期比待增加日期大的累计
 		List<ProductSell> gtList = productSellDao.findGtDay(year, month, day, ps.getBusiType());
 		if(gtList.size() > 0) {
 			//由于是新增,所有对于之后的记录来说实际增加的值即为增量 
@@ -64,12 +73,11 @@ public class ProductSellServiceImpl implements ProductSellService {
 			ps.setId(null);
 			productSellDao.batchGtUpdateAccu(year, month, day, ps);
 		}
-		
 	}
 	
 	/**
-	 * 修改包括修改本条记录的累计及日期大于本条记录的所有累计
-	 * 修改时只修改之后的记录 
+	 * 1. 修改包括修改本条记录的累计及日期大于本条记录的所有累计,修改时只修改之后的记录
+	 * 2. 修改完以后按月更新修改记录所在月的所有记录的所有累计，防止删除 - 不存在，只要删除完重置累计即可
 	 */
 	@Transactional
     public void modify(ProductSell ps) throws Exception {
@@ -142,10 +150,17 @@ public class ProductSellServiceImpl implements ProductSellService {
 		return productSellDao.findById(id);
 	}
     
+	/**
+	 * 删除时只能在同一个页面删除同一个月的多条记录
+	 * 删除完成以后，需要重置该月份的所有记录的3个累计值
+	 */
     @Transactional
-    public void removeById(String[] attrs) {
-    	int[] ids = FormatUtil.StringArrayToIntArray(attrs);
+    public void removeById(int[] ids, Integer year, Integer month, Integer busiType) {
+    	log.info("删除记录开始");
     	productSellDao.deleteById(ids);
+    	log.info(String.format("删除完成，重置[%s]年[%s]月类型为[%s]的所有累计开始......", year, month, busiType));
+    	calAccu(year, month, busiType);
+    	log.info(String.format("重置[%s]年[%s]月类型为[%s]的所有累计结束......", year, month, busiType));
     }
     
     /**

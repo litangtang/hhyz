@@ -15,7 +15,7 @@ public interface ProductSellService {
      */  
     public PageBean listAll(int pageSize,int page,ProductSell ps); 
     
-    public void removeById(String[] attrs);
+    public void removeById(int[] ids, Integer year, Integer month, Integer busiType);
     
     public ProductSell queryById(int id);
     

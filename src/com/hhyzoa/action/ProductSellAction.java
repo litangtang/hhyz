@@ -3,16 +3,20 @@ package com.hhyzoa.action;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.hhyzoa.model.PageBean;
 import com.hhyzoa.model.ProductSell;
 import com.hhyzoa.service.ProductSellService;
 import com.hhyzoa.util.Constants;
 import com.hhyzoa.util.DateUtil;
+import com.hhyzoa.util.FormatUtil;
 import com.hhyzoa.util.StringUtil;
 
 public class ProductSellAction extends BaseAction {
 	
+	private Logger log = LoggerFactory.getLogger(ProductSellAction.class);
 	private ProductSellService productSellService;
 	private HttpServletRequest request;
 	
@@ -113,13 +117,27 @@ public class ProductSellAction extends BaseAction {
 		return SUCCESS;
 	}
 	
+	/**
+	 * 删除记录
+	 * @return
+	 */
 	public String delete() {
     	request = ServletActionContext.getRequest();
     	String[] deleteIds = request.getParameterValues("productSellId");
     	String busiTypeStr = StringUtil.trim(request.getParameter("busiTypeHid"));
     	this.paramBusiType = busiTypeStr;
     	
-    	productSellService.removeById(deleteIds);
+    	//2016-05-17 增加,删除时传参年、月、类型 
+    	String searchYear = StringUtil.trim(request.getParameter("searchYear"));
+    	String searchMonth = StringUtil.trim(request.getParameter("searchMonth"));
+    	log.info(String.format("删除[]年[]月类型为[]的记录：[%s]", searchYear, searchMonth, busiTypeStr, deleteIds.toString()));
+    	
+    	int[] ids = FormatUtil.StringArrayToIntArray(deleteIds);
+    	Integer year = Integer.parseInt(searchYear);
+    	Integer month = Integer.parseInt(searchMonth);
+    	Integer type = Integer.parseInt(busiTypeStr);
+    	
+    	productSellService.removeById(ids, year, month, type);
     	request.setAttribute("busiType", busiTypeStr);
     	return SUCCESS;
     }
