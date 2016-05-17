@@ -243,7 +243,6 @@ public class TradeServiceImpl implements TradeService {
         		 *  amountAccu;	//数量累计
         		 *  balanceAccu //余额累计 - 没用，余额本身就是累计
         		 */
-        		
         		if(i == list.size()-1) {
         			t.setPackageAccu(t.getPackages());
         			t.setPackageAccuStr(FormatUtil.convertE2Num(String.valueOf(t.getPackageAccu())));
