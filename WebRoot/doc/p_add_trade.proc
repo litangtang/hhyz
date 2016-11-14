@@ -2,32 +2,111 @@ DELIMITER $$
 
 USE `hhyz`$$
 
-DROP PROCEDURE IF EXISTS `p_update_balance`$$
+DROP PROCEDURE IF EXISTS `p_add_trade`$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `p_add_trade`(
-					IN in_client_id INT,
-					IN trade FLOAT,
-					IN in_level INT)
-    READS SQL DATA
+					IN in_client_id INT, 
+					IN in_tradeDate DATE, 
+					IN in_abst VARCHAR(50),
+					IN in_packages INT,
+					IN in_amount FLOAT,
+					IN in_price FLOAT,
+					IN in_carriage FLOAT,
+					IN in_payment FLOAT,
+					IN in_verify VARCHAR(50),
+					IN in_remark VARCHAR(100),
+					IN in_flag INT)
 BEGIN
-		DECLARE trade_count INT DEFAULT 0; 
-		DECLARE	trade_id INT; 			
-		DECLARE match_trade CURSOR FOR SELECT trade.id FROM trade WHERE LEVEL > in_level AND client_id = in_client_id; 
+		DECLARE gt_tradeDate_count INT DEFAULT 0; 
+		DECLARE eq_tradeDate_maxLevel,lt_tradeDate_maxLevel INT DEFAULT 0; 
+		DECLARE	db_trade_id,db_level INT;
+		DECLARE db_balance,new_db_balance,balance_change FLOAT;
+		DECLARE	new_db_level,new_db_is_loan INT;
 		
-		SELECT COUNT(*)	INTO trade_count FROM trade WHERE LEVEL > in_level AND client_id = in_client_id ;
-		OPEN match_trade;
-		update_balance:LOOP
-			FETCH match_trade INTO trade_id;
-			IF trade_count > 0 THEN
-				UPDATE trade SET balance = balance + in_balance_change WHERE id = trade_id;		
+		DECLARE P_ID INT;
+		
+		DECLARE cur_trade_id CURSOR FOR SELECT id FROM trade WHERE DATE > in_tradeDate AND client_id = in_client_id; 
+			
+		DECLARE CONTINUE HANDLER FOR SQLSTATE '02000' SET P_ID = NULL; 
+		
+		SELECT MAX(LEVEL) INTO eq_tradeDate_maxLevel FROM trade WHERE DATE = in_tradeDate AND client_id = in_client_id ;
+		
+		SELECT COUNT(*)	INTO gt_tradeDate_count FROM trade WHERE DATE > in_tradeDate AND client_id = in_client_id ;
+		
+		
+		SET balance_change = in_carriage - in_payment; 
+		IF eq_tradeDate_maxLevel > 0 THEN  
+			
+			SELECT balance INTO db_balance FROM trade WHERE DATE = in_tradeDate AND client_id = in_client_id AND LEVEL=eq_tradeDate_maxLevel;
+			SET new_db_level = eq_tradeDate_maxLevel + 1;
+			SET new_db_balance = db_balance + balance_change;
+			IF in_flag = 1 THEN 
+				CASE 
+					WHEN new_db_balance = 0 THEN SET new_db_is_loan = 0;
+					WHEN new_db_balance > 0 THEN SET new_db_is_loan = 2;	
+					ELSE SET new_db_is_loan = 1;
+				END CASE;
+			ELSE  
+				CASE 
+					WHEN new_db_balance = 0 THEN SET new_db_is_loan = 0;
+					WHEN new_db_balance > 0 THEN SET new_db_is_loan = 1;	
+					ELSE SET new_db_is_loan = 2;
+				END CASE;
 			END IF;
 			
-			SET trade_count = trade_count - 1;
-			IF trade_count=0 THEN
-				LEAVE update_balance;
+			INSERT INTO trade (client_id,DATE,abst,packages,amount,price,carriage,payment,is_loan,balance,verify,remark,flag,LEVEL) 
+			VALUES(in_client_id,in_tradeDate,in_abst,in_packages,in_amount,in_price,in_carriage,in_payment,new_db_is_loan,new_db_balance,in_verify,in_remark,in_flag,new_db_level) ;
+		ELSE 
+			
+			SELECT balance,LEVEL INTO db_balance,db_level FROM trade WHERE DATE < in_tradeDate AND client_id = in_client_id ORDER BY DATE DESC,ID DESC LIMIT 1;
+			SET new_db_level = db_level + 1;
+			SET new_db_balance = db_balance + balance_change;	
+			IF in_flag = 1 THEN 
+				CASE 
+					WHEN new_db_balance = 0 THEN SET new_db_is_loan = 0;
+					WHEN new_db_balance > 0 THEN SET new_db_is_loan = 2;	
+					ELSE SET new_db_is_loan = 1;
+				END CASE;
+			ELSE  
+				CASE 
+					WHEN new_db_balance = 0 THEN SET new_db_is_loan = 0;
+					WHEN new_db_balance > 0 THEN SET new_db_is_loan = 1;	
+					ELSE SET new_db_is_loan = 2;
+				END CASE;
 			END IF;
-		END LOOP update_balance;
-		CLOSE match_trade;
-    END$$
+			
+			INSERT INTO trade (client_id,DATE,abst,packages,amount,price,carriage,payment,is_loan,balance,verify,remark,flag,LEVEL) 
+			VALUES(in_client_id,in_tradeDate,in_abst,in_packages,in_amount,in_price,in_carriage,in_payment,new_db_is_loan,new_db_balance,in_verify,in_remark,in_flag,new_db_level) ;
+		END IF;
+		
+		OPEN cur_trade_id;
+		myLoop:LOOP
+			FETCH cur_trade_id INTO db_trade_id;
+			IF gt_tradeDate_count = NULL OR gt_tradeDate_count = 0 THEN
+				LEAVE myLoop;
+			ELSE 
+				
+				SELECT balance INTO db_balance FROM trade WHERE id = db_trade_id;
+				SET new_db_balance = db_balance + balance_change;
+				IF in_flag = 1 THEN 
+				CASE 
+					WHEN new_db_balance = 0 THEN SET new_db_is_loan = 0;
+					WHEN new_db_balance > 0 THEN SET new_db_is_loan = 2;	
+					ELSE SET new_db_is_loan = 1;
+				END CASE;
+				ELSE  
+					CASE 
+						WHEN new_db_balance = 0 THEN SET new_db_is_loan = 0;
+						WHEN new_db_balance > 0 THEN SET new_db_is_loan = 1;	
+						ELSE SET new_db_is_loan = 2;
+					END CASE;
+				END IF;
+				
+				UPDATE trade SET balance = new_db_balance, is_loan=new_db_is_loan,LEVEL=LEVEL+1 WHERE id = db_trade_id;
+				SET gt_tradeDate_count = gt_tradeDate_count - 1;
+			END IF;	
+		END LOOP myLoop;
+		CLOSE cur_trade_id;
+END$$
 
 DELIMITER ;
