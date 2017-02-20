@@ -77,3 +77,15 @@ CREATE TABLE `cost_accounting` (
   `date` date DEFAULT NULL COMMENT '日期',
   PRIMARY KEY (`id`)
 );
+
+##20170220 add t_client_rank, 客户访问统计表
+CREATE TABLE `t_client_rank` (
+	`id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+	`client_id` int NOT NULL COMMENT '客户id',
+	`user_id` int COMMENT '用户id',
+	`user_name` varchar(255) COMMENT '用户姓名',
+	`count` int COMMENT '访问次数',
+	`intime` timestamp NULL COMMENT '入库时间',
+	`modtime` timestamp NULL COMMENT '修改时间',
+	PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8 COMMENT='客户访问次数统计表';
