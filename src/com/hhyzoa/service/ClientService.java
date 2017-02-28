@@ -47,6 +47,9 @@ public interface ClientService {
 	 * @return
 	 */
     public Map<Integer,String> queryByType(Integer type);
+    
+    //2017-02-27 add
+    public void modifyCount(Integer id, Integer count);
 
 
 }

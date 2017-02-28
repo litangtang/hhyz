@@ -14,16 +14,16 @@
 	
 	<package name="struts-shop" extends="struts-default">
 	    <interceptors>
-	    	<interceptor name="authority" class="com.hhyzoa.interceptor.AuthorityInterceptor"/>
+	    	<interceptor name="clientAccessInterceptor" class="com.hhyzoa.interceptor.ClientAccessInterceptor"/>
 	    	
 	    	<interceptor-stack name="myStack">
-	        	<interceptor-ref name="authority"></interceptor-ref>
+	        	<interceptor-ref name="clientAccessInterceptor"></interceptor-ref>
 	       		<interceptor-ref name="defaultStack"/>
 	      	</interceptor-stack>
 	    </interceptors>
 	    
 	    <!-- 这句是设置所有Action自动调用的拦截器堆栈  -->
-	    <default-interceptor-ref name="defaultStack"/>
+	    <default-interceptor-ref name="myStack"/>
   </package>
 	<!-- 首页 -->
 

@@ -4,11 +4,13 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Component;
@@ -16,12 +18,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hhyzoa.dao.ClientDao;
 import com.hhyzoa.model.Client;
-import com.hhyzoa.util.GBKOrder;
 
 @SuppressWarnings("unchecked")
 @Component("clientDao")
 public class ClientDaoImpl extends BaseDaoImpl implements ClientDao {
-	
+	private Logger log = Logger.getLogger(ClientDaoImpl.class);
 	private HibernateTemplate hibernateTemplate;
 	
 	private Session session;
@@ -47,8 +48,12 @@ public class ClientDaoImpl extends BaseDaoImpl implements ClientDao {
 		Criteria criteria = session.createCriteria(Client.class);
 		Example example = Example.create(client);
 		example.enableLike(MatchMode.ANYWHERE);//使QBE支持模糊查询
-		criteria.add(example)
-				.addOrder(GBKOrder.asc("name"));
+		//2017-02-27 修改为按访问频率count排序
+//		criteria.add(example).addOrder(GBKOrder.asc("name"));
+		criteria.add(example);
+		criteria.addOrder(Order.desc("count"));
+		criteria.addOrder(Order.desc("modtime"));
+		
 		List<Client> list = super.listAll(criteria,offset, pageSize);        //"一页"的记录
 		return list;
 	}
@@ -135,6 +140,17 @@ public class ClientDaoImpl extends BaseDaoImpl implements ClientDao {
 //				return (List<Client>)query.list();
 //			}
 //		});
+	}
+	
+	//2017-02-27 add
+	@Transactional
+	public void updateCount(Integer id, Integer count) {
+		StringBuilder hql = new StringBuilder("update Client c set c.count = :count where c.id = :id");
+		log.info(String.format("更新用户访问频率sql语句：%s, count=%s, id=%s", hql.toString(), count, id));
+        Query query = hibernateTemplate.getSessionFactory().getCurrentSession().createQuery(hql.toString());
+        query.setInteger("count", count);
+        query.setInteger("id", id);
+		query.executeUpdate();
 	}
 
 	

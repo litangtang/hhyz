@@ -46,4 +46,7 @@ public interface ClientDao extends BaseDao{
 	 */
 	public List<Client> findALL(final Integer type);
 	
+	//2017-02-27 add
+	public void updateCount(Integer id, Integer count);
+	
 }

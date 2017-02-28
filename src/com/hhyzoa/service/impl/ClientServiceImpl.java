@@ -25,12 +25,17 @@ public class ClientServiceImpl implements ClientService {
 	private TradeDao tradeDao;
 
 	public void add(Client client) {
+		client.setCount(0);
 		clientDao.save(client);
 
 	}
 	
 	public void modify(Client client) {
 		clientDao.update(client);
+	}
+	
+	public void modifyCount(Integer id, Integer count) {
+		clientDao.updateCount(id, count);
 	}
 	
 	/**

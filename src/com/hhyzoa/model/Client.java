@@ -1,5 +1,6 @@
 package com.hhyzoa.model;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -32,6 +33,10 @@ public class Client {
 	private String mobilePhone;
 	private String fax;
 	private String remark;
+	//2017-02-27 增加count，modtime
+	private Integer count;
+	private Date modtime;
+	
 	
 	
 	private Set<Trade> trades; //与往来一对多
@@ -149,5 +154,20 @@ public class Client {
 		this.remark = remark;
 	}
 	
+	@Column(name="count")
+	public Integer getCount() {
+		return count;
+	}
+	public void setCount(Integer count) {
+		this.count = count;
+	}
+	
+	@Column(name="modtime")
+	public Date getModtime() {
+		return modtime;
+	}
+	public void setModtime(Date modtime) {
+		this.modtime = modtime;
+	}
 	
 }
