@@ -60,12 +60,12 @@ public class ProductSellDaoImpl extends BaseDaoImpl implements ProductSellDao {
 		List<ProductSell> list = psCriteria.list();    //"一页"的记录
 		return list;
 	}
-	
+
 	/**
 	 * 根据日期查询小于传入天的记录,并按正序排列
-	 * @param pageSize
-	 * @param offset
-	 * @param productSell
+	 * @param year
+	 * @param month
+	 * @param day
 	 * @param busiType
 	 * @return
 	 */
@@ -86,12 +86,12 @@ public class ProductSellDaoImpl extends BaseDaoImpl implements ProductSellDao {
 		List<ProductSell> list = psCriteria.list();        //"一页"的记录
 		return list;
 	}
-	
+
 	/**
 	 * 根据日期查询大于传入天的记录,并按正序排列
-	 * @param pageSize
-	 * @param offset
-	 * @param productSell
+	 * @param year
+	 * @param month
+	 * @param day
 	 * @param busiType
 	 * @return
 	 */
@@ -210,16 +210,16 @@ public class ProductSellDaoImpl extends BaseDaoImpl implements ProductSellDao {
 			//更新日期相同的记录
 			Query query2 = session.createQuery(hql2.toString());
 			query2.setInteger("newPackagesAccu", ps.getPackagesChange());
-			query2.setFloat("newCountAccu", ps.getCountChange());
-			query2.setFloat("newAmountAccu", ps.getAmountChange());
+			query2.setDouble("newCountAccu", ps.getCountChange());
+			query2.setDouble("newAmountAccu", ps.getAmountChange());
 			query2.executeUpdate();
 		}
 		
 		//更新日期大的记录
 		Query query = session.createQuery(hql.toString());
 		query.setInteger("newPackagesAccu", ps.getPackagesChange());
-		query.setFloat("newCountAccu", ps.getCountChange());
-		query.setFloat("newAmountAccu", ps.getAmountChange());
+		query.setDouble("newCountAccu", ps.getCountChange());
+		query.setDouble("newAmountAccu", ps.getAmountChange());
 		query.executeUpdate();
 		
 	}

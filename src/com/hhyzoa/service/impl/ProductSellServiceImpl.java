@@ -53,13 +53,13 @@ public class ProductSellServiceImpl implements ProductSellService {
 		if(psList.size() > 0) {
 			//psList的最后一项的累计 + 当前增加的
 			ps.setPackagesAccu(psList.get(psList.size()-1).getPackagesAccu() + ps.getPackages());
-			ps.setCountAccu(FormatUtil.floatFormat(psList.get(psList.size()-1).getCountAccu() + ps.getCount(), 2));
-			ps.setAmountAccu(FormatUtil.floatFormat(psList.get(psList.size()-1).getAmountAccu() + ps.getAmount(), 2));
+			ps.setCountAccu(FormatUtil.doubleFormat(psList.get(psList.size()-1).getCountAccu() + ps.getCount(), 2));
+			ps.setAmountAccu(FormatUtil.doubleFormat(psList.get(psList.size()-1).getAmountAccu() + ps.getAmount(), 2));
 			
 		}else {//每个月初始情况,保证数据库值不为空 
 			ps.setPackagesAccu(ps.getPackages()==null?0:ps.getPackages());
-			ps.setCountAccu(FormatUtil.floatFormat(ps.getCount()==null?0:ps.getCount(), 2));
-			ps.setAmountAccu(FormatUtil.floatFormat(ps.getAmount()==null?0:ps.getAmount(), 2));
+			ps.setCountAccu(FormatUtil.doubleFormat(ps.getCount()==null?0:ps.getCount(), 2));
+			ps.setAmountAccu(FormatUtil.doubleFormat(ps.getAmount()==null?0:ps.getAmount(), 2));
 		}
 		productSellDao.save(ps);
 		
@@ -68,8 +68,8 @@ public class ProductSellServiceImpl implements ProductSellService {
 		if(gtList.size() > 0) {
 			//由于是新增,所有对于之后的记录来说实际增加的值即为增量 
 			ps.setPackagesChange(ps.getPackages());
-			ps.setCountChange(FormatUtil.floatFormat(ps.getCount(), 2));
-			ps.setAmountChange(FormatUtil.floatFormat(ps.getAmount(), 2));
+			ps.setCountChange(FormatUtil.doubleFormat(ps.getCount(), 2));
+			ps.setAmountChange(FormatUtil.doubleFormat(ps.getAmount(), 2));
 			ps.setId(null);
 			productSellDao.batchGtUpdateAccu(year, month, day, ps);
 		}
@@ -87,18 +87,18 @@ public class ProductSellServiceImpl implements ProductSellService {
 		//修改之前的 
 		ProductSell oldPs = productSellDao.findById(ps.getId());
 		int packagesChange = ps.getPackages() - oldPs.getPackages();
-		float countChange = FormatUtil.floatFormat(ps.getCount() - oldPs.getCount(), 2);
-		float amountChange = FormatUtil.floatFormat(ps.getAmount() - oldPs.getAmount(), 2);
+		double countChange = FormatUtil.doubleFormat(ps.getCount() - oldPs.getCount(), 2);
+		double amountChange = FormatUtil.doubleFormat(ps.getAmount() - oldPs.getAmount(), 2);
 		
 		//修改修改的那条记录
 		ps.setPackagesAccu(oldPs.getPackagesAccu() + packagesChange);
-		ps.setCountAccu(FormatUtil.floatFormat(oldPs.getCountAccu() + countChange, 2));
-		ps.setAmountAccu(FormatUtil.floatFormat(oldPs.getAmountAccu() + amountChange, 2));
+		ps.setCountAccu(FormatUtil.doubleFormat(oldPs.getCountAccu() + countChange, 2));
+		ps.setAmountAccu(FormatUtil.doubleFormat(oldPs.getAmountAccu() + amountChange, 2));
 		
 		//oldPs组织修改时需要的参数 
 		oldPs.setPackagesChange(packagesChange);
-		oldPs.setCountChange(FormatUtil.floatFormat(countChange, 2));
-		oldPs.setAmountChange(FormatUtil.floatFormat(amountChange, 2));
+		oldPs.setCountChange(FormatUtil.doubleFormat(countChange, 2));
+		oldPs.setAmountChange(FormatUtil.doubleFormat(amountChange, 2));
 		
 		productSellDao.update(ps);
 		//修改后面的记录
@@ -131,8 +131,8 @@ public class ProductSellServiceImpl implements ProductSellService {
         List<ProductSell> list = productSellDao.findAll(pageSize, offset, ps);
         //格式化数据
         for(ProductSell pSell : list) {
-        	pSell.setCountAccu(FormatUtil.floatFormat(pSell.getCountAccu(), 2));
-        	pSell.setAmountAccu(FormatUtil.floatFormat(pSell.getAmountAccu(), 2));
+        	pSell.setCountAccu(FormatUtil.doubleFormat(pSell.getCountAccu(), 2));
+        	pSell.setAmountAccu(FormatUtil.doubleFormat(pSell.getAmountAccu(), 2));
         }
            
         //把分页信息保存到Bean中   
@@ -177,22 +177,22 @@ public class ProductSellServiceImpl implements ProductSellService {
     		ProductSell ps = list.get(i);
     		if(i == 0) {
     			ps.setPackagesAccu(ps.getPackages());
-    			ps.setCountAccu(FormatUtil.floatFormat(ps.getCount(), 2));
-	    		ps.setAmountAccu(FormatUtil.floatFormat(ps.getAmount(), 2));
+    			ps.setCountAccu(FormatUtil.doubleFormat(ps.getCount(), 2));
+	    		ps.setAmountAccu(FormatUtil.doubleFormat(ps.getAmount(), 2));
     		}else {
 	    		int pAccu = 0;
-	    		float cAccu = 0;
-	    		float aAccu = 0;
+	    		double cAccu = 0;
+				double aAccu = 0;
 	    		for(int j=0; j<i; j++) {
 	    			ProductSell psl = list.get(j);
 	    			pAccu += psl.getPackages();
-	    			cAccu += FormatUtil.floatFormat(psl.getCount(), 2);
-	    			aAccu += FormatUtil.floatFormat(psl.getAmount(), 2);
+	    			cAccu += FormatUtil.doubleFormat(psl.getCount(), 2);
+	    			aAccu += FormatUtil.doubleFormat(psl.getAmount(), 2);
 	    		}
 	    		
 	    		ps.setPackagesAccu(ps.getPackages() + pAccu);
-	    		ps.setCountAccu(FormatUtil.floatFormat(ps.getCount() + cAccu, 2));
-	    		ps.setAmountAccu(FormatUtil.floatFormat(ps.getAmount() + aAccu, 2));
+	    		ps.setCountAccu(FormatUtil.doubleFormat(ps.getCount() + cAccu, 2));
+	    		ps.setAmountAccu(FormatUtil.doubleFormat(ps.getAmount() + aAccu, 2));
     		}
     		productSellDao.update(ps);
     	}

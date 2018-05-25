@@ -21,10 +21,10 @@ public class Trade {
 	private Date date ;			//日期
 	private String abst ;		//摘要
 	private Integer packages ; 	//件数
-	private Float amount ;		//数量
-	private Float price ;		//单价
-	private Float carriage ;	//送货金额
-	private Float payment ;     //付款金额
+	private Double amount ;		//数量
+	private Double price ;		//单价
+	private Double carriage ;	//送货金额
+	private Double payment ;     //付款金额
 	
 	//欠别人即为贷，别人欠自己则为借
 	//对于原料往来，送货金额-付款金额，余额为正则为2贷，为负则为1即借
@@ -33,7 +33,7 @@ public class Trade {
 	
 	private String isLoanStr ;	//借贷标志字符串
 	
-	private Float balance ;		//余额
+	private Double balance ;		//余额
 	private String verify ;		//核对情况
 	private String remark ;		//备注
 	private Integer flag ;		//1为原料往来 2为销售往来  与client.type一一对应
@@ -48,8 +48,8 @@ public class Trade {
 	 * *******************************************************
 	 */
 	private Integer packageAccu ; 	//件数累计
-	private Float amountAccu;		//数量累计
-	private Float balanceAccu ;		//余额累计
+	private Double amountAccu;		//数量累计
+	private Double balanceAccu ;		//余额累计
 	
 	private String packageAccuStr;	//件数累计,取消科学计数法展示
 	private String amountAccuStr;		//数量累计,取消科学计数法展示
@@ -90,34 +90,34 @@ public class Trade {
 	}
 	
 	@Column
-	public Float getAmount() {
+	public Double getAmount() {
 		return amount;
 	}
-	public void setAmount(Float amount) {
+	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
 	
 	@Column
-	public Float getPrice() {
+	public Double getPrice() {
 		return price;
 	}
-	public void setPrice(Float price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 	
 	@Column
-	public Float getCarriage() {
+	public Double getCarriage() {
 		return carriage;
 	}
-	public void setCarriage(Float carriage) {
+	public void setCarriage(Double carriage) {
 		this.carriage = carriage;
 	}
 	
 	@Column
-	public Float getPayment() {
+	public Double getPayment() {
 		return payment;
 	}
-	public void setPayment(Float payment) {
+	public void setPayment(Double payment) {
 		this.payment = payment;
 	}
 	
@@ -130,10 +130,10 @@ public class Trade {
 	}
 	
 	@Column
-	public Float getBalance() {
+	public Double getBalance() {
 		return balance;
 	}
-	public void setBalance(Float balance) {
+	public void setBalance(Double balance) {
 		this.balance = balance;
 	}
 	
@@ -193,18 +193,18 @@ public class Trade {
 	}
 	
 	@Transient
-	public Float getAmountAccu() {
+	public Double getAmountAccu() {
 		return amountAccu;
 	}
-	public void setAmountAccu(Float amountAccu) {
+	public void setAmountAccu(Double amountAccu) {
 		this.amountAccu = amountAccu;
 	}
 	
 	@Transient
-	public Float getBalanceAccu() {
+	public Double getBalanceAccu() {
 		return balanceAccu;
 	}
-	public void setBalanceAccu(Float balanceAccu) {
+	public void setBalanceAccu(Double balanceAccu) {
 		this.balanceAccu = balanceAccu;
 	}
 	

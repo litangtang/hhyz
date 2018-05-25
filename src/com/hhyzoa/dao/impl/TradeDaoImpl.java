@@ -123,8 +123,7 @@ public class TradeDaoImpl extends BaseDaoImpl implements TradeDao {
 		return (Trade)getHibernateTemplate().execute(new HibernateCallback() {
 			public Trade doInHibernate(Session session) throws HibernateException,
 					SQLException {
-				Query query = null;
-				query = session.createQuery("FROM Trade as t where t.level = :level and t.client.id = :clientId");
+				Query query = session.createQuery("FROM Trade as t where t.level = :level and t.client.id = :clientId");
 				query.setInteger("level", level);
 				query.setInteger("clientId", clientId);
 				return (Trade)query.uniqueResult();
@@ -140,8 +139,7 @@ public class TradeDaoImpl extends BaseDaoImpl implements TradeDao {
 		return (Integer)getHibernateTemplate().execute(new HibernateCallback() {
 			public Integer doInHibernate(Session session) throws HibernateException,
 					SQLException {
-				Query query = null;
-				query = session.createQuery("SELECT MAX(level) FROM Trade where client.id = :clientId");
+				Query query = session.createQuery("SELECT MAX(level) FROM Trade where client.id = :clientId");
 				query.setInteger("clientId", clientId);
 				return (Integer)query.uniqueResult();
 			}
@@ -151,7 +149,7 @@ public class TradeDaoImpl extends BaseDaoImpl implements TradeDao {
 	
 	/**
 	 * 根据id删除往来
-	 * @param id
+	 * @param ids
 	 */
 	@Transactional
 	public void deleteById(int[] ids) {
@@ -186,19 +184,17 @@ public class TradeDaoImpl extends BaseDaoImpl implements TradeDao {
 	 * @param currLevel
 	 */
 	@Transactional
-	public void proUpdateBalance(int clientId, float balanceChange, int currLevel) {
+	public void proUpdateBalance(int clientId, double balanceChange, int currLevel) {
 		Query query =  hibernateTemplate.getSessionFactory().getCurrentSession().createSQLQuery("{Call p_update_balance(?,?,?)}");
 		query.setInteger(0, clientId);
-		query.setFloat(1, balanceChange);
+		query.setDouble(1, balanceChange);
 		query.setInteger(2, currLevel);
 		query.executeUpdate();
 	}
 	
 	/**
 	 * 调用存储过程增加交易往来
-	 * @param clientId
-	 * @param balanceChange
-	 * @param currLevel
+	 * @param trade
 	 */
 	@Transactional
 	public void proAddTrade(Trade trade) {
@@ -212,10 +208,10 @@ public class TradeDaoImpl extends BaseDaoImpl implements TradeDao {
 		query.setDate(1, trade.getDate());
 		query.setString(2, trade.getAbst());
 		query.setInteger(3, trade.getPackages());
-		query.setFloat(4, trade.getAmount());
-		query.setFloat(5,trade.getPrice());
-		query.setFloat(6,trade.getCarriage());
-		query.setFloat(7,trade.getPayment());
+		query.setDouble(4, trade.getAmount());
+		query.setDouble(5,trade.getPrice());
+		query.setDouble(6,trade.getCarriage());
+		query.setDouble(7,trade.getPayment());
 		query.setString(8, trade.getVerify());
 		query.setString(9, trade.getRemark());
 		query.setInteger(10, trade.getFlag());

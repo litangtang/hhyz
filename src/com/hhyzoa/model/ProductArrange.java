@@ -22,9 +22,9 @@ public class ProductArrange {
 	private Integer year;			//年
 	private String clientName;		//订货单位
 	private Integer packages;		//件数
-	private Float count;			//数量,吨数
-	private Float price;			//单价
-	private Float amount;			//金额
+	private Double count;			//数量,吨数
+	private Double price;			//单价
+	private Double amount;			//金额
 	private String arriveDate;		//到货时间
 	private Integer isSend;			//是否发货，0-未发货，1-已发货 
 	private String remark;			//备注
@@ -32,8 +32,8 @@ public class ProductArrange {
 	private Date recordDate; 		//记录日期,service里解析年月日存库
 	
 	private Integer packageAccu;	//件数累计,不存库
-	private Float countAccu;		//数量累计,不存库
-	private Float amountAccu;		//金额累计,不存库
+	private Double countAccu;		//数量累计,不存库
+	private Double amountAccu;		//金额累计,不存库
 	
 	private String packageAccuStr;	//件数累计,取消科学计数法展示,不存库
 	private String countAccuStr ;//数量累计累计,取消科学计数法展示,不存库
@@ -58,26 +58,26 @@ public class ProductArrange {
 	}
 	
 	@Column
-	public Float getCount() {
+	public Double getCount() {
 		return count;
 	}
-	public void setCount(Float count) {
+	public void setCount(Double count) {
 		this.count = count;
 	}
 	
 	@Column
-	public Float getPrice() {
+	public Double getPrice() {
 		return price;
 	}
-	public void setPrice(Float price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 	
 	@Column
-	public Float getAmount() {
+	public Double getAmount() {
 		return amount;
 	}
-	public void setAmount(Float amount) {
+	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
 	
@@ -154,18 +154,18 @@ public class ProductArrange {
 	}
 	
 	@Transient
-	public Float getCountAccu() {
+	public Double getCountAccu() {
 		return countAccu;
 	}
-	public void setCountAccu(Float countAccu) {
+	public void setCountAccu(Double countAccu) {
 		this.countAccu = countAccu;
 	}
 	
 	@Transient
-	public Float getAmountAccu() {
+	public Double getAmountAccu() {
 		return amountAccu;
 	}
-	public void setAmountAccu(Float amountAccu) {
+	public void setAmountAccu(Double amountAccu) {
 		this.amountAccu = amountAccu;
 	}
 	

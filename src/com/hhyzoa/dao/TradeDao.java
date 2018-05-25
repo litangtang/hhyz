@@ -17,14 +17,14 @@ public interface TradeDao extends BaseDao{
     public int getAllRowCount(Trade trade);
     
     /**
-     * 取得与某个客户交易的最大level，即最近的记录
+     * ???????????????????level???????????
      * @param clientId
      * @return
      */
     public Integer findMaxLevelOfTrade(Integer clientId);
     
     /**
-     * 取得最近的一笔交易记录
+     * ????????????????
      * @param clientId
      * @param level
      * @return
@@ -32,33 +32,33 @@ public interface TradeDao extends BaseDao{
     public Trade findLatestTrade(final Integer clientId,final Integer level);
     
     /**
-	 * 根据id删除往来
+	 * ????id???????
 	 * @param id
 	 */
 	public void deleteById(int[] ids);
 	
 	
 	/**
-	 * 更新Trade
+	 * ????Trade
 	 */
 	public void update(Trade trade);
 	
 	/**
-	 * 调用存储过程更新level>currLevle的所有balance
+	 * ????????????level>currLevle??????balance
 	 * @param clientId
 	 * @param balanceChange
 	 * @param currLevel
 	 */
-	public void proUpdateBalance(int clientId, float balanceChange, int currLevel);
+	public void proUpdateBalance(int clientId, double balanceChange, int currLevel);
 	
 	/**
-	 * 调用存储过程增加往来
+	 * ?????????????????
 	 * @param trade
 	 */
 	public void proAddTrade(Trade trade);
 	
 	/**
-	 * 获取客户的所有往来数
+	 * ??????????????????
 	 * @param clientId
 	 * @return
 	 */

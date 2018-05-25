@@ -36,7 +36,7 @@ public class TradeServiceImpl implements TradeService {
 		if(null != c) {
 			//初始化trade数据
 			this.initTradeData(trade, c);
-			Float balanceChange = trade.getCarriage() - trade.getPayment();//往来余额=送货金额-付款金额
+			Double balanceChange = trade.getCarriage() - trade.getPayment();//往来余额=送货金额-付款金额
 			//查询客户往来数
 			int count = tradeDao.getClientTradeCount(c.getId());
 			if(count == 0) {//首笔交易,直接入库
@@ -60,8 +60,8 @@ public class TradeServiceImpl implements TradeService {
 	 * @return
 	 */
 	public Trade initTradeData(Trade trade, Client c) {
-		Float carriage = trade.getCarriage(); //送货金额
-		Float payment = trade.getPayment(); //付款金额
+		Double carriage = trade.getCarriage(); //送货金额
+		Double payment = trade.getPayment(); //付款金额
 		
 		if(null == trade.getAbst()) {
 			trade.setAbst("");
@@ -70,16 +70,16 @@ public class TradeServiceImpl implements TradeService {
 			trade.setPackages(Integer.valueOf(0));
 		}
 		if(null == trade.getAmount()) {
-			trade.setAmount(Float.valueOf(0));
+			trade.setAmount(Double.valueOf(0));
 		}
 		if(null == trade.getPrice()) {
-			trade.setPrice(Float.valueOf(0));
+			trade.setPrice(Double.valueOf(0));
 		}
 		if(null == carriage) {
-			carriage = Float.valueOf(0);
+			carriage = Double.valueOf(0);
 		}
 		if(null == payment) {
-			payment = Float.valueOf(0);
+			payment = Double.valueOf(0);
 		}
 		if(null == trade.getVerify()) {
 			trade.setVerify("");
@@ -104,7 +104,7 @@ public class TradeServiceImpl implements TradeService {
 	 * @param balance
 	 * @return isLoan 0-平,1-借,2-贷
 	 */
-	public Integer getIsLoanFlag(Trade trade, Float balance) {
+	public Integer getIsLoanFlag(Trade trade, Double balance) {
 		Integer isLoan = 0;
 		if(1 == trade.getFlag()) { //原料往来，送货金额-付款金额，余额为正则为2即贷，为负则为1即借
 			if(balance > 0) {
@@ -143,19 +143,19 @@ public class TradeServiceImpl implements TradeService {
     		newTrade.setAbst("");
     	}
     	if(null == newTrade.getCarriage()) {
-    		newTrade.setCarriage(Float.valueOf(0));
+    		newTrade.setCarriage(Double.valueOf(0));
     	}
     	if(null == newTrade.getPayment()) {
-    		newTrade.setPayment(Float.valueOf(0));
+    		newTrade.setPayment(Double.valueOf(0));
     	}
     	if(null == newTrade.getPackages()) {
     		newTrade.setPackages(Integer.valueOf(0));
     	}
     	if(null == newTrade.getAmount()) {
-    		newTrade.setAmount(Float.valueOf(0));
+    		newTrade.setAmount(Double.valueOf(0));
     	}
     	if(null == newTrade.getPrice()) {
-    		newTrade.setPrice(Float.valueOf(0));
+    		newTrade.setPrice(Double.valueOf(0));
     	}
     	
     	//此行的目的是防止页面上修改了数量或者单价，但是没有点击送货金额文本框导致从页面取得的值是旧的
@@ -165,7 +165,7 @@ public class TradeServiceImpl implements TradeService {
     	Client c = oldTrade.getClient();
 		if(null != c) {
 			newTrade.setClient(c);
-			Float balance = Float.valueOf(0) ; //余额
+			Double balance = Double.valueOf(0) ; //余额
 			
 			Integer maxLevel = tradeDao.findMaxLevelOfTrade(c.getId());
 			if(null == maxLevel || 0 == maxLevel || 1 == maxLevel){  //第一笔交易来往，更新时应该不会出现此种情况
@@ -232,7 +232,7 @@ public class TradeServiceImpl implements TradeService {
         		Trade t = list.get(i);
         		t.setIsLoanStr(this.getIsLoanStr(t.getIsLoan()));//借贷标志字符串
         		t.setDate(DateUtil.dateFormat(t.getDate()));//日期格式化
-        		t.setBalance(FormatUtil.floatFormat(t.getBalance(), 1));//格式化余额
+        		t.setBalance(FormatUtil.doubleFormat(t.getBalance(), 2));//格式化余额
         		
         		/******************************************************************
         		 * 			计算累计方法
@@ -299,7 +299,7 @@ public class TradeServiceImpl implements TradeService {
         	for(Trade tr : list) {
         		tr.setIsLoanStr(this.getIsLoanStr(tr.getIsLoan()));
         		tr.setDate(DateUtil.dateFormat(tr.getDate()));
-        		tr.setBalance(FormatUtil.floatFormat(tr.getBalance(), 1));
+        		tr.setBalance(FormatUtil.doubleFormat(tr.getBalance(), 2));
         	}
         }
         
@@ -336,13 +336,14 @@ public class TradeServiceImpl implements TradeService {
 	
 	//取得借贷字符串，只用于显示
 	public String getIsLoanStr(Integer isLoan) {
-		if(0 == isLoan) {
-			return "平";
-		}else if(1 == isLoan) {
-			return "借";
-		}else {
-			return "贷";
-		}
+
+			if (0 == isLoan) {
+				return "平";
+			} else if (1 == isLoan) {
+				return "借";
+			} else {
+				return "贷";
+			}
 	}
 
 	

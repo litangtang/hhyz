@@ -41,11 +41,11 @@ public class ProductArrangeServiceImpl implements ProductArrangeService {
 		if(null == pa.getPackages())
 			pa.setPackages(0);
 		if(null == pa.getCount())
-			pa.setCount(Float.valueOf(0));
+			pa.setCount(Double.valueOf(0));
 		if(null == pa.getPrice())
-			pa.setPrice(Float.valueOf(0));
+			pa.setPrice(Double.valueOf(0));
 		if(null == pa.getAmount())
-			pa.setAmount(Float.valueOf(0));
+			pa.setAmount(Double.valueOf(0));
 		if(null == pa.getIsSend())
 			pa.setIsSend(0);
 		
@@ -65,11 +65,11 @@ public class ProductArrangeServiceImpl implements ProductArrangeService {
 		if(null == pa.getPackages())
 			pa.setPackages(0);
 		if(null == pa.getCount())
-			pa.setCount(Float.valueOf(0));
+			pa.setCount(Double.valueOf(0));
 		if(null == pa.getPrice())
-			pa.setPrice(Float.valueOf(0));
+			pa.setPrice(Double.valueOf(0));
 		if(null == pa.getAmount())
-			pa.setAmount(Float.valueOf(0));
+			pa.setAmount(Double.valueOf(0));
 		if(null == pa.getIsSend())
 			pa.setIsSend(0);
 		

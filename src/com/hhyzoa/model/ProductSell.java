@@ -21,9 +21,9 @@ public class ProductSell {
 	private String clientName;		//客户名称
 	private Integer busiType;		//1-蓖麻饼，2-精炼一级油，3-国标二级油
 	private Integer packages;		//件数
-	private Float count;			//数量
-	private Float amount;			//金额
-	private Float price;			//单价
+	private Double count;			//数量
+	private Double amount;			//金额
+	private Double price;			//单价
 	private Integer day;			//月
 	private Integer month;			//日
 	private Integer year;			//年
@@ -31,12 +31,12 @@ public class ProductSell {
 	
 	private Date sellDate; 			//销售日期,service里解析年月日存库
 	private Integer packagesChange;	//件数增量,不存库
-	private Float countChange;		//数量增量,不存库
-	private Float amountChange;		//金额增量,不存库
+	private Double countChange;		//数量增量,不存库
+	private Double amountChange;		//金额增量,不存库
 	
 	private Integer packagesAccu;	//件数累计
-	private Float countAccu;		//数量累计
-	private Float amountAccu;		//金额累计
+	private Double countAccu;		//数量累计
+	private Double amountAccu;		//金额累计
 	
 	@Id
 	@GeneratedValue
@@ -64,26 +64,26 @@ public class ProductSell {
 	}
 	
 	@Column
-	public Float getCount() {
+	public Double getCount() {
 		return count;
 	}
-	public void setCount(Float count) {
+	public void setCount(Double count) {
 		this.count = count;
 	}
 	
 	@Column
-	public Float getPrice() {
+	public Double getPrice() {
 		return price;
 	}
-	public void setPrice(Float price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 	
 	@Column
-	public Float getAmount() {
+	public Double getAmount() {
 		return amount;
 	}
-	public void setAmount(Float amount) {
+	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
 	
@@ -128,18 +128,18 @@ public class ProductSell {
 	}
 	
 	@Column(name="count_accu")
-	public Float getCountAccu() {
+	public Double getCountAccu() {
 		return countAccu;
 	}
-	public void setCountAccu(Float countAccu) {
+	public void setCountAccu(Double countAccu) {
 		this.countAccu = countAccu;
 	}
 	
 	@Column(name="amount_accu")
-	public Float getAmountAccu() {
+	public Double getAmountAccu() {
 		return amountAccu;
 	}
-	public void setAmountAccu(Float amountAccu) {
+	public void setAmountAccu(Double amountAccu) {
 		this.amountAccu = amountAccu;
 	}
 	
@@ -168,18 +168,18 @@ public class ProductSell {
 	}
 	
 	@Transient
-	public Float getCountChange() {
+	public Double getCountChange() {
 		return countChange;
 	}
-	public void setCountChange(Float countChange) {
+	public void setCountChange(Double countChange) {
 		this.countChange = countChange;
 	}
 	
 	@Transient
-	public Float getAmountChange() {
+	public Double getAmountChange() {
 		return amountChange;
 	}
-	public void setAmountChange(Float amountChange) {
+	public void setAmountChange(Double amountChange) {
 		this.amountChange = amountChange;
 	}
 }

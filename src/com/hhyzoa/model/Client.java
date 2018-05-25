@@ -15,35 +15,35 @@ import javax.persistence.Transient;
 
 
 /**
- * ¿Í»§
+ * å®¢æˆ·
  * @author lizhibin
  *
  */
 @Entity(name="Client")
 public class Client {
-	
+
 	private Integer id;
 	private String name;
 	private String companyName;
-	private Integer type;//1ÎªÔ­ÁÏ¿Í»§ 2ÎªÏúÊÛ¿Í»§ Óëtrade.flagÒ»Ò»¶ÔÓ¦
-	private String typeStr;//Ò³ÃæÕ¹Ê¾Àà±ğ
-	
+	private Integer type;//1ä¸ºåŸæ–™å®¢æˆ· 2ä¸ºé”€å”®å®¢æˆ· ä¸trade.flagä¸€ä¸€å¯¹åº”
+	private String typeStr;//é¡µé¢å±•ç¤ºç±»åˆ«
+
 	private String companyAddr;
 	private String officePhone;
 	private String mobilePhone;
 	private String fax;
 	private String remark;
-	//2017-02-27 Ôö¼Ócount£¬modtime
+	//2017-02-27 å¢åŠ countï¼Œmodtime
 	private Integer count;
 	private Date modtime;
-	
-	
-	
-	private Set<Trade> trades; //ÓëÍùÀ´Ò»¶Ô¶à
-	
+
+
+
+	private Set<Trade> trades; //ä¸å¾€æ¥ä¸€å¯¹å¤š
+
 	@OneToMany(mappedBy="client",
 			cascade={CascadeType.REMOVE}
-		//fetch=FetchType.EAGER
+			//fetch=FetchType.EAGER
 	)
 	public Set<Trade> getTrades() {
 		return trades;
@@ -51,9 +51,9 @@ public class Client {
 	public void setTrades(Set<Trade> trades) {
 		this.trades = trades;
 	}
-	
-	private Set<CostAccounting> costAccountings; //Óë³É±¾ºËËãÒ»¶Ô¶à
-	
+
+	private Set<CostAccounting> costAccountings; //ä¸æˆæœ¬æ ¸ç®—ä¸€å¯¹å¤š
+
 	@OneToMany(mappedBy="client",
 			cascade={CascadeType.REMOVE}
 	)
@@ -63,7 +63,7 @@ public class Client {
 	public void setCostAccountings(Set<CostAccounting> costAccountings) {
 		this.costAccountings = costAccountings;
 	}
-	
+
 	@Id
 	@GeneratedValue
 	public Integer getId() {
@@ -72,7 +72,7 @@ public class Client {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 	@Column
 	public String getName() {
 		return name;
@@ -80,7 +80,7 @@ public class Client {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	@Column(name="COMPANY_NAME")
 	public String getCompanyName() {
 		return companyName;
@@ -88,7 +88,7 @@ public class Client {
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
 	}
-	
+
 	@Column
 	public Integer getType() {
 		return type;
@@ -96,7 +96,7 @@ public class Client {
 	public void setType(Integer type) {
 		this.type = type;
 	}
-	
+
 	@Transient
 	public String getTypeStr() {
 		return typeStr;
@@ -104,16 +104,16 @@ public class Client {
 	public void setTypeStr(String typeStr) {
 		this.typeStr = typeStr;
 	}
-	
-	
+
+
 	public static Map<Integer,String> getTypeString() {
 		Map<Integer,String> typeStrMap = new HashMap<Integer,String>();
-		typeStrMap.put(Integer.valueOf(1), "Ô­ÁÏ¿Í»§");
-		typeStrMap.put(Integer.valueOf(2), "ÏúÊÛ¿Í»§");
+		typeStrMap.put(Integer.valueOf(1), "åŸæ–™å®¢æˆ·");
+		typeStrMap.put(Integer.valueOf(2), "é”€å”®å®¢æˆ·");
 		return typeStrMap;
-		
+
 	}
-	
+
 	@Column(name="COMPANY_ADDR")
 	public String getCompanyAddr() {
 		return companyAddr;
@@ -121,7 +121,7 @@ public class Client {
 	public void setCompanyAddr(String companyAddr) {
 		this.companyAddr = companyAddr;
 	}
-	
+
 	@Column(name="OFFICE_PHONE")
 	public String getOfficePhone() {
 		return officePhone;
@@ -129,7 +129,7 @@ public class Client {
 	public void setOfficePhone(String officePhone) {
 		this.officePhone = officePhone;
 	}
-	
+
 	@Column(name="MOBILE_PHONE")
 	public String getMobilePhone() {
 		return mobilePhone;
@@ -137,7 +137,7 @@ public class Client {
 	public void setMobilePhone(String mobilePhone) {
 		this.mobilePhone = mobilePhone;
 	}
-	
+
 	@Column(name="FAX")
 	public String getFax() {
 		return fax;
@@ -145,7 +145,7 @@ public class Client {
 	public void setFax(String fax) {
 		this.fax = fax;
 	}
-	
+
 	@Column(name="REMARK")
 	public String getRemark() {
 		return remark;
@@ -153,7 +153,7 @@ public class Client {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	
+
 	@Column(name="count")
 	public Integer getCount() {
 		return count;
@@ -161,7 +161,7 @@ public class Client {
 	public void setCount(Integer count) {
 		this.count = count;
 	}
-	
+
 	@Column(name="modtime")
 	public Date getModtime() {
 		return modtime;
@@ -169,5 +169,5 @@ public class Client {
 	public void setModtime(Date modtime) {
 		this.modtime = modtime;
 	}
-	
+
 }
