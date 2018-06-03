@@ -45,20 +45,20 @@
 				}
 			});
 			
-			//不含税金额 = 原始金额 / 1.17
+			//不含税金额 = 原始金额 / 1.16
 			$("#noTaxAmt").focus(function(){
 				var origAmt = $("#origAmt").val();
 				if(null != origAmt && "" != origAmt) {
-					var temp = origAmt / 1.17;
+					var temp = origAmt / 1.16;
 					$("#noTaxAmt").attr("value",numFormat(temp,2));//格式化数据，保留两位小数
 				}
 			});
 			
-			//销项税 = 不含税金额 * 0.17
+			//销项税 = 不含税金额 * 0.16
 			$("#sellTax").focus(function(){
 				var noTaxAmt = $("#noTaxAmt").val();
 				if(null != noTaxAmt && "" != noTaxAmt) {
-					var temp = noTaxAmt * 0.17;
+					var temp = noTaxAmt * 0.16;
 					$("#sellTax").attr("value",numFormat(temp,2));//格式化数据，保留两位小数
 				}
 			});

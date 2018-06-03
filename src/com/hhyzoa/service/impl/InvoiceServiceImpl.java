@@ -17,7 +17,9 @@ import com.hhyzoa.util.FormatUtil;
 @Component("invoiceService")
 public class InvoiceServiceImpl implements InvoiceService {
 	
+	private static final double TAX_RATE = 0.16;//税率
 	private InvoiceDao invoiceDao;
+
 
 	/**
 	 * 不含税金额 = 原始金额 /1.17
@@ -41,8 +43,8 @@ public class InvoiceServiceImpl implements InvoiceService {
 			invoice.setPrice(Double.valueOf(0));
 		//以下三行计算顺序不能变
 		invoice.setOrigAmt(FormatUtil.doubleFormat(invoice.getCount() * invoice.getPrice(), 2));
-		invoice.setNoTaxAmt(FormatUtil.doubleFormat(invoice.getOrigAmt() / 1.17, 2));
-		invoice.setSellTax(FormatUtil.doubleFormat(invoice.getNoTaxAmt() * 0.17, 2));
+		invoice.setNoTaxAmt(FormatUtil.doubleFormat(invoice.getOrigAmt() / (1 + TAX_RATE), 2));
+		invoice.setSellTax(FormatUtil.doubleFormat(invoice.getNoTaxAmt() * TAX_RATE, 2));
 		
 		//计算累计
 		List<Invoice> invList = invoiceDao.findLeDay(year, month, day);
@@ -118,8 +120,8 @@ public class InvoiceServiceImpl implements InvoiceService {
 		//防止页面上没有点击金额文本框,金额实际值没有计算
 		//以下三行计算顺序不能变
 		invoice.setOrigAmt(FormatUtil.doubleFormat(invoice.getCount() * invoice.getPrice(), 2));
-		invoice.setNoTaxAmt(FormatUtil.doubleFormat(invoice.getOrigAmt() / 1.17, 2));
-		invoice.setSellTax(FormatUtil.doubleFormat(invoice.getNoTaxAmt() * 0.17, 2));
+		invoice.setNoTaxAmt(FormatUtil.doubleFormat(invoice.getOrigAmt() / (1 + TAX_RATE), 2));
+		invoice.setSellTax(FormatUtil.doubleFormat(invoice.getNoTaxAmt() * TAX_RATE, 2));
 		
 		//修改之前的 
 		Invoice oldInv = invoiceDao.findById(invoice.getId());
