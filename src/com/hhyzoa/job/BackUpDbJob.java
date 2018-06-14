@@ -23,6 +23,7 @@ public class BackUpDbJob implements Job {
 	
 	private Logger log = LoggerFactory.getLogger(BackUpDbJob.class);
 	private String dbPropertiesPath = "/conf/jdbc.properties";
+	private String dumpScriptPath = "/usr/local/mysql/bin/";
 	
 	@Override
 	public void execute(JobExecutionContext arg0) throws JobExecutionException {
@@ -39,7 +40,7 @@ public class BackUpDbJob implements Job {
 		String fileName = "hhyz_" + curDate + ".sql";
 		log.info(String.format("当前时间：[%s],数据库备份文件名:[%s]", curDate, fileName));
 		//组装备份脚本命令
-		StringBuilder sb = new StringBuilder("cmd /c ");
+		StringBuilder sb = new StringBuilder();
 		String path = BackUpDbJob.class.getResource("").getPath();//获取当前类路径:/D:/Develop/tomcat/webapps/hhyz_oa/WEB-INF/classes/com/hhyzoa/job/
 		log.info("当前类路径：" + path);
 		
@@ -48,11 +49,11 @@ public class BackUpDbJob implements Job {
 		String dbName = dbUrl.substring(dbUrl.lastIndexOf("/") + 1);
 		String username = properties.getProperty("jdbc.username");
 		String password = properties.getProperty("jdbc.password");
-		String dumpPath = properties.getProperty("jdbc.dumpPath");//E:\\db_backup\\
+		String dumpPath = properties.getProperty("jdbc.dumpPath");
 		log.info(String.format("数据库为[%s],用户名为[%s],密码为[%s],备份路径[%s]", dbName, username, password, dumpPath));
 		
-		sb.append(dumpPath)
-		  .append("mysqldump.exe ")
+		sb.append(dumpScriptPath)
+		  .append("mysqldump ")
 		  .append("-u").append(username).append(" ")
 		  .append("-p").append(password).append(" ")
 		  .append(dbName).append(" > ")
@@ -61,7 +62,8 @@ public class BackUpDbJob implements Job {
 		try {  
 //			Process ps = Runtime.getRuntime().exec("cmd /c E:\\dbbackup\\mysqldump.exe -uroot -p123456 hhyz > E:/dbbackup/hhyz_%file_name%.sql");//可以执行 
 //			Process ps = Runtime.getRuntime().exec("cmd /c E:\\dbbackup\\mysqldump.bat"); //可以执行
-			Process ps = Runtime.getRuntime().exec(sb.toString());
+			String[] cmd = {"/bin/sh", "-c", sb.toString()};
+			Process ps = Runtime.getRuntime().exec(cmd);
 //			String[] cmdStr = {"d:\\mysqldump.exe -uroot -pmysql hhyz>D:\\db_backup\\hhyz_20160115.sql"};
             InputStream in = ps.getInputStream();  
             int c;  
