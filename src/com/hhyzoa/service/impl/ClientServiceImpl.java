@@ -6,7 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-
+import com.hhyzoa.util.PropertiesUtil;
+import com.hhyzoa.util.PropertyPlaceholder;
+import com.hhyzoa.util.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +24,8 @@ import com.hhyzoa.util.FormatUtil;
 
 @Component("clientService")
 public class ClientServiceImpl implements ClientService {
-	
+
+	private Logger log = LoggerFactory.getLogger(ClientServiceImpl.class);
 	private ClientDao clientDao;
 	private TradeDao tradeDao;
 
@@ -71,7 +76,8 @@ public class ClientServiceImpl implements ClientService {
         	c.setTypeStr((String)typeStrMap.get(c.getType()));
         	clientList.add(c);
         }
-           
+
+//		clientList = reorderClientList(clientList, client.getType());
         //把分页信息保存到Bean中   
         PageBean pageBean = new PageBean();   
         pageBean.setPageSize(pageSize);       
@@ -85,7 +91,7 @@ public class ClientServiceImpl implements ClientService {
 
     /**
      * 根据id删除用户
-     * @param id数组
+     * @param attrs id数组
      */
     @Transactional
     public void removeById(String[] attrs) {
@@ -119,6 +125,40 @@ public class ClientServiceImpl implements ClientService {
     	
     	return cMap;
     }
+
+	/**
+	 *	TODO 分页查询，查出来的可能没有
+	 * @param clientList
+	 * @param type 1为原料客户 2为销售客户
+	 * @return
+	 */
+    private List<Client> reorderClientList(List<Client> clientList, Integer type) {
+    	if(null != type) {
+			List<Client> reorderedClientList = new ArrayList<Client>();
+			String prefix = "CLIENTID_ORDER_";
+			String clientIdOrder = StringUtil.trim((String) PropertyPlaceholder.getProperty(prefix + type));
+			if(!StringUtil.isEmpty(clientIdOrder)) {
+				String[] clientIdOrderArr = clientIdOrder.split(",");
+				log.info(String.format("客户类型[%s]置顶客户顺序[%s]", type, clientIdOrder));
+
+				//组织数据
+				Map<String, Client> clientMap = new HashMap<String, Client>();
+				for (Client c : clientList) {
+					clientMap.put(String.valueOf(c.getId()), c);
+				}
+				//组装置顶数据,从原list中移除置顶数据
+				for (String id : clientIdOrderArr) {
+					reorderedClientList.add(clientMap.get(id));
+					clientList.remove(clientMap.get(id));
+				}
+				//增加原list中除置顶数据以为的数据
+				reorderedClientList.addAll(clientList);
+				clientList = reorderedClientList;
+			}
+		}
+		return clientList;
+	}
+
 
 
 	public ClientDao getClientDao() {

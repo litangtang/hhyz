@@ -79,13 +79,21 @@ public class FormatUtil {
 	 */
 	public static String convertE2Num(String eStr) {
 		BigDecimal num = new BigDecimal(eStr);
-		DecimalFormat dFormat = new DecimalFormat("0.0");
+		DecimalFormat dFormat = new DecimalFormat("0.00");
 		return dFormat.format(num);
 	}
 	
 	public static void main(String[] args) {
-		String string  ="1.530586E7";
-		System.out.println(FormatUtil.convertE2Num(string));
+//		float  f = 517062.1f;
+//		System.out.println(FormatUtil.floatFormat(f, 2));
+
+//		long l = Long.MAX_VALUE;
+//		double d = l / 1.0;
+//		System.out.println(d);
+		float f = 0.95F;
+		double d = f;
+		System.out.println(d);
+//		System.out.println(FormatUtil.doubleFormat(f,2));
 	}
 
 }

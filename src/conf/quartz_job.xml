@@ -18,7 +18,7 @@
     <group>BackUp_Group</group>
     <job-name>BackUpDbScheduler</job-name>
     <job-group>BackUp</job-group>
-    <cron-expression>0 15 9 * * ?</cron-expression>
+    <cron-expression>0 0 2 * * ?</cron-expression>
    </cron>
   </trigger>
  </schedule>

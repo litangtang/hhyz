@@ -17,13 +17,18 @@ import com.hhyzoa.util.FormatUtil;
 @Component("invoiceService")
 public class InvoiceServiceImpl implements InvoiceService {
 	
-	private static final double TAX_RATE = 0.16;//税率
+	private static final double TAX_RATE = 0.13;//税率 20190429 从4月份起税率由16%调整为13%
 	private InvoiceDao invoiceDao;
 
 
 	/**
 	 * 不含税金额 = 原始金额 /1.17
 	 * 销项税 = 不含税金额 * 0.17
+	 *
+	 * 20190429
+	 * 增值税是一种价外税，即对税前价征税，增值税=销项税 - 进项税
+	 * 也就是说: origAmt = 不含税价格 + 销项税(不含税价格 * 税率)
+	 * 不含税价格 = origAmt / （1 + 税率）
 	 * 
 	 * 新增的某一天的记录为该天的最后一条记录
 	 */
