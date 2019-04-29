@@ -1,0 +1,18 @@
+CREATE TABLE `trade` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `client_id` int(11) DEFAULT NULL COMMENT '客户id',
+  `date` date DEFAULT NULL,
+  `abst` varchar(50) DEFAULT NULL COMMENT '摘要',
+  `packages` int(11) DEFAULT NULL COMMENT '件数',
+  `amount` double DEFAULT NULL COMMENT '数量',
+  `price` double DEFAULT NULL COMMENT '单价',
+  `carriage` double DEFAULT NULL COMMENT '送货金额',
+  `payment` double DEFAULT NULL COMMENT '付款金额',
+  `is_loan` int(11) DEFAULT NULL COMMENT '1为借2为贷',
+  `balance` double DEFAULT NULL COMMENT '余额',
+  `verify` varchar(50) DEFAULT NULL COMMENT '核对情况',
+  `remark` varchar(100) DEFAULT NULL COMMENT '备注',
+  `flag` int(2) DEFAULT NULL COMMENT '1为原料往来2为销售往来',
+  `level` int(20) DEFAULT NULL COMMENT '每增加一笔来往，加1，针对单个客户，从1开始',
+  PRIMARY KEY (`id`)
+) ;

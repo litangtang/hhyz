@@ -6,18 +6,24 @@ CREATE TABLE `trade` (
   `date` date DEFAULT NULL,
   `abst` varchar(50) DEFAULT NULL COMMENT '摘要',
   `packages` int(11) DEFAULT NULL COMMENT '件数',
-  `amount` float DEFAULT NULL COMMENT '数量',
-  `price` float DEFAULT NULL COMMENT '单价',
-  `carriage` float DEFAULT NULL COMMENT '送货金额',
-  `payment` float DEFAULT NULL COMMENT '付款金额',
+  `amount` double DEFAULT NULL COMMENT '数量',
+  `price` double DEFAULT NULL COMMENT '单价',
+  `carriage` double DEFAULT NULL COMMENT '送货金额',
+  `payment` double DEFAULT NULL COMMENT '付款金额',
   `is_loan` int(11) DEFAULT NULL COMMENT '1为借2为贷',
-  `balance` float DEFAULT NULL COMMENT '余额',
+  `balance` double DEFAULT NULL COMMENT '余额',
   `verify` varchar(50) DEFAULT NULL COMMENT '核对情况',
   `remark` varchar(100) DEFAULT NULL COMMENT '备注',
   `flag` int(2) DEFAULT NULL COMMENT '1为原料往来2为销售往来',
   `level` int(20) DEFAULT NULL COMMENT '每增加一笔来往，加1，针对单个客户，从1开始',
   PRIMARY KEY (`id`)
 ) ;
+
+ALTER TABLE hhyz.trade MODIFY COLUMN amount DOUBLE NULL ;
+ALTER TABLE hhyz.trade MODIFY COLUMN price DOUBLE NULL ;
+ALTER TABLE hhyz.trade MODIFY COLUMN carriage DOUBLE NULL ;
+ALTER TABLE hhyz.trade MODIFY COLUMN payment DOUBLE NULL ;
+ALTER TABLE hhyz.trade MODIFY COLUMN balance DOUBLE NULL ;
 
 CREATE TABLE `client` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -81,3 +87,14 @@ CREATE TABLE `cost_accounting` (
 ##20170220 alter client, 增加count、modtime字段
 alter table client add column count int not null default 0;
 alter table client add column modtime timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+
+ALTER TABLE hhyz.t_product_sell MODIFY COLUMN count DOUBLE DEFAULT 0 NULL ;
+ALTER TABLE hhyz.t_product_sell MODIFY COLUMN price DOUBLE DEFAULT 0 NULL ;
+ALTER TABLE hhyz.t_product_sell MODIFY COLUMN amount DOUBLE DEFAULT 0 NULL ;
+ALTER TABLE hhyz.t_product_sell MODIFY COLUMN count_accu DOUBLE DEFAULT 0 NULL ;
+ALTER TABLE hhyz.t_product_sell MODIFY COLUMN amount_accu DOUBLE DEFAULT 0 NULL ;
+
+
+ALTER TABLE hhyz.t_product_arrange MODIFY COLUMN count DOUBLE NULL COMMENT '吨数' ;
+ALTER TABLE hhyz.t_product_arrange MODIFY COLUMN price DOUBLE NULL COMMENT '单价' ;
+ALTER TABLE hhyz.t_product_arrange MODIFY COLUMN amount DOUBLE NULL COMMENT '金额' ;

@@ -14,11 +14,13 @@
     <!-- 打开Annotation注入 -->  
     <context:annotation-config />  
     <context:component-scan base-package="com.hhyzoa" />  
-    <bean  
-        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  
+    <bean id="propertyConfigurer" class="com.hhyzoa.util.PropertyPlaceholder">
+        <property name="ignoreResourceNotFound" value="true"/>
         <property name="locations">  
-            <!--  <value>classpath:conf/jdbc.properties</value>  -->
-            <value>classpath:conf//jdbc.properties</value>
+            <list>
+                <value>classpath:conf/jdbc.properties</value>
+                <value>classpath:conf/common_config.properties</value>
+            </list>
         </property>  
     </bean>  
   
